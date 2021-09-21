@@ -1,0 +1,24 @@
+name: Delegates and events - build
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '09-delegates-and-events/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install dependencies
+      run: dotnet restore ./09-delegates-and-events/DelegatesAndEvents/DelegatesAndEvents.sln
+    - name: Build Debug
+      run: dotnet build ./09-delegates-and-events/DelegatesAndEvents/DelegatesAndEvents.sln --configuration Debug --no-restore
+    - name: Build Release
+      run: dotnet build ./09-delegates-and-events/DelegatesAndEvents/DelegatesAndEvents.sln --configuration Release --no-restore

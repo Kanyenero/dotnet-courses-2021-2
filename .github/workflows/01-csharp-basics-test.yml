@@ -1,0 +1,35 @@
+name: C# basics - test
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '01-csharp-basics/**'
+      
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: CheeryProgrammer/dotnet-courses-tests
+    - uses: actions/checkout@v2
+      with:
+        path: tasks
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install dependencies for tasks
+      run: dotnet restore ./tasks/01-csharp-basics/CSharpBasics/CSharpBasics.sln
+    - name: Build Debug
+      run: dotnet build ./tasks/01-csharp-basics/CSharpBasics/CSharpBasics.sln --configuration Debug --no-restore -v:q
+    - name: Build Release
+      run: dotnet build ./tasks/01-csharp-basics/CSharpBasics/CSharpBasics.sln --configuration Release --no-restore -v:q
+    - name: Install dependencies for tests
+      run: dotnet restore ./tests/01-csharp-basics/CSharpBasics.sln
+    - name: Build Tests
+      run: dotnet build ./tests/01-csharp-basics/CSharpBasics.sln --no-restore -v:q
+    - name: Tests
+      run: dotnet test ./tests/01-csharp-basics/CSharpBasics.sln --nologo --no-restore --no-build --logger "console;verbosity=detailed" -v:minimal

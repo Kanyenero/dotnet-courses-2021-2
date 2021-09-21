@@ -1,0 +1,36 @@
+name: Files - test
+
+on:
+  push:
+    branches: [ master ]
+    
+    paths:
+      - '11-files/**'
+      
+jobs:
+
+  test:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: CheeryProgrammer/dotnet-courses-tests
+    - uses: actions/checkout@v2
+      with:
+        path: tasks
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install dependencies for tasks
+      run: dotnet restore ./tasks/11-files/Files/Files.sln
+    - name: Install dependencies for tests
+      run: dotnet restore ./tests/11-files/Files.sln
+    - name: Build debug
+      run: dotnet build ./tests/11-files/Files.sln --configuration Debug --no-restore
+    - name: Build release
+      run: dotnet build ./tests/11-files/Files.sln --configuration Release --no-restore
+    - name: Tests
+      run: dotnet test ./tests/11-files/Files.sln --nologo --no-restore --no-build --logger "console;verbosity=detailed" -v:minimal

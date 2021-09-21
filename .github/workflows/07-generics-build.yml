@@ -1,0 +1,24 @@
+name: Generics - build
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '07-generics/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install dependencies
+      run: dotnet restore ./07-generics/Generics/Generics.sln
+    - name: Build Debug
+      run: dotnet build ./07-generics/Generics/Generics.sln --configuration Debug --no-restore
+    - name: Build Release
+      run: dotnet build ./07-generics/Generics/Generics.sln --configuration Release --no-restore

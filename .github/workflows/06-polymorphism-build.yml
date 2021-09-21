@@ -1,0 +1,24 @@
+name: Polymorphism - build
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '06-polymorphism/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install dependencies
+      run: dotnet restore ./06-polymorphism/Polymorphism/Polymorphism.sln
+    - name: Build Debug
+      run: dotnet build ./06-polymorphism/Polymorphism/Polymorphism.sln --configuration Debug --no-restore
+    - name: Build Release
+      run: dotnet build ./06-polymorphism/Polymorphism/Polymorphism.sln --configuration Release --no-restore
