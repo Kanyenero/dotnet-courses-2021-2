@@ -21,7 +21,7 @@ namespace Task1
 
             square = side1 * side2;
             Console.WriteLine("=================");
-            Console.WriteLine($"Rectangle square: {square}");
+            Console.WriteLine(square);
         }
 
         static int CheckConsoleInput(ref string input)
