@@ -6,14 +6,13 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            const int fixedSize = 6;
-            int[] generatedArray = new int[fixedSize];
-            int[] sortedArray = new int[fixedSize];
+            int[] generatedArray = new int[6];
+            int[] sortedArray = new int[6];
 
             int minArrayValue;
             int maxArrayValue;
 
-            generatedArray = GenerateArray(fixedSize);
+            generatedArray = GenerateArray();
             PrintArray(generatedArray);
 
             Console.WriteLine("~~~~~");
@@ -22,9 +21,9 @@ namespace Task1
             PrintArray(sortedArray);
         }
 
-        static int[] GenerateArray(int arraySize)
+        static int[] GenerateArray()
         {
-            int[] array = new int[arraySize];
+            int[] array = new int[6];
             Random rnd = new Random();
 
             for(int i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
