@@ -20,7 +20,7 @@ namespace Task2
             for (int i = 1; i <= levels; i++)
             {
                 string side = new String('*', i);
-                Console.WriteLine(side.PadRight(levels));
+                Console.WriteLine(side);
             }
         }
 
