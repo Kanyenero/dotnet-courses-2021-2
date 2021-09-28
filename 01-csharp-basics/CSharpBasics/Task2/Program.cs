@@ -68,7 +68,7 @@ namespace Task2
 
                 if (state == true)
                 {
-                    Console.WriteLine("Number accepted!");
+                    //Console.WriteLine("Number accepted!");
                     break;
                 }
             }
