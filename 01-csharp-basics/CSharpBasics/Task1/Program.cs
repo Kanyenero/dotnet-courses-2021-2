@@ -24,7 +24,7 @@ namespace Task1
             Console.WriteLine($"Rectangle square: {square}");
         }
 
-        static int CheckConsoleInput(ref string input/*, ref bool state*/)
+        static int CheckConsoleInput(ref string input)
         {
             bool state = false;
             int sideSize = 0;
