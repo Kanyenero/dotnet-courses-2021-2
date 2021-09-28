@@ -22,7 +22,7 @@ namespace Task5
                 else {  }
             }
 
-            Console.WriteLine($"Answer: {sum}");
+            Console.WriteLine(sum);
         }
     }
 }
