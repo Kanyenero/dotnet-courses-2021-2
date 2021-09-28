@@ -17,14 +17,19 @@ namespace Task4
 
         static void BuildFigure(int figNum)
         {
-            for(int i = 0; i <= figNum; i++)
+            int cntr = 0;
+
+            for(int i = 1; i <= figNum; i++)
             {
-                for(int j = 0; j <= i; j++)
+                for(int j = 0; j < i; j++)
                 {
+                    cntr++;
                     string side = new String('*', j);
-                    Console.WriteLine(side.PadLeft(figNum) + "*" + side);
+                    Console.WriteLine(side.PadLeft(figNum-1) + "*" + side);
                 }
             }
+
+            //Console.WriteLine(cntr);
         }
 
         static int CheckConsoleInput(ref string input)
