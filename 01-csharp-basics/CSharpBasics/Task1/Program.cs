@@ -6,7 +6,6 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            bool ok = false;
             string userInput1 = "\0";
             string userInput2 = "\0";
             int side1 = 0; 
