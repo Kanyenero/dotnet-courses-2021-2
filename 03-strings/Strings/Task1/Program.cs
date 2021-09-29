@@ -28,7 +28,7 @@ namespace Task1
                 sumWordLengths += word.Length;
             }
 
-            int avgWordLength = sumWordLengths / spltUserInput.Length;
+            double avgWordLength = (double)sumWordLengths / (double)spltUserInput.Length;
             Console.WriteLine(avgWordLength);
         }
     }
