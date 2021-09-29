@@ -11,12 +11,12 @@ namespace Task3
             CultureInfo ru  = new CultureInfo("ru");
             CultureInfo inv = new CultureInfo("");
 
-            showCultureDifferences(ref ru, ref en);
-            showCultureDifferences(ref en, ref inv);
-            showCultureDifferences(ref ru, ref inv);
+            ShowCultureDifferences(ref ru, ref en);
+            ShowCultureDifferences(ref en, ref inv);
+            ShowCultureDifferences(ref ru, ref inv);
         }
 
-        public static void showCultureDifferences(ref CultureInfo ci1, ref CultureInfo ci2)
+        public static void ShowCultureDifferences(ref CultureInfo ci1, ref CultureInfo ci2)
         {
             string infoRow = String.Format("{0,2} vs {1,2}: {2, 4} | {3, 4} | {4, 4} " +
                                            "| {5, 4} | {6, 20} | {7, 20} | {8, 10} | {9, 10}",
