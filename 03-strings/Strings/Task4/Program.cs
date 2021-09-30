@@ -20,6 +20,7 @@ namespace Task4
 
             TimeSpan tsString = stopWatch.Elapsed;
 
+            stopWatch.Reset();
             stopWatch.Start();
             for (int i = 0; i < N; i++) { sb.Append("*"); }
             stopWatch.Stop();
