@@ -42,15 +42,15 @@ namespace Task1
 
         public User(DateTime birthday, string lastname, string name, string patronymic)
         {
-            if (!validString(lastname))
+            if (!ValidString(lastname))
             {
                 return;
             }
-            if(!validString(name))
+            if(!ValidString(name))
             {
                 return;
             }
-            if(!validString(patronymic))
+            if(!ValidString(patronymic))
             {
                 return;
             }
@@ -68,7 +68,7 @@ namespace Task1
             get { return this.name; }
             set 
             {
-                if(validString(value))
+                if(ValidString(value))
                 {
                     this.name = value;
                 }
@@ -80,7 +80,7 @@ namespace Task1
             get { return this.lastname; }
             set
             {
-                if (validString(value))
+                if (ValidString(value))
                 {
                     this.lastname = value;
                 }
@@ -92,7 +92,7 @@ namespace Task1
             get { return this.patronymic; }
             set
             {
-                if (validString(value))
+                if (ValidString(value))
                 {
                     this.patronymic = value;
                 }
@@ -109,7 +109,7 @@ namespace Task1
         }
 
 
-        private bool validString(string str)
+        private bool ValidString(string str)
         {
             if(str == null)
             {
@@ -126,7 +126,7 @@ namespace Task1
                 throw new ArgumentOutOfRangeException(String.Format("Field [{0}] is too long!", str), "str");
             }
 
-            if(strHasDigitsOrPunctuation(str))
+            if(StrHasDigitsOrPunctuation(str))
             {
                 throw new ArgumentException(String.Format("Field [{0}] contains digits or punctuation!", str), "str");
             }
@@ -134,7 +134,7 @@ namespace Task1
             return true;
         }
 
-        private bool strHasDigitsOrPunctuation(string str)
+        private bool StrHasDigitsOrPunctuation(string str)
         {
             foreach (char c in str)
             {
