@@ -12,9 +12,6 @@ namespace Task1
             {
                 User user = new User(dateTime, "Ivanov", "Ivan", "Ivanovich");
                 Console.WriteLine(user.UserInfo());
-
-                user.Lastname = "Smirnov";
-                Console.WriteLine(user.UserInfo());
             }
             catch (ArgumentNullException exc)
             {
@@ -37,107 +34,56 @@ namespace Task1
         private string name = string.Empty, 
                        lastname = string.Empty, 
                        patronymic = string.Empty;
+        int age;
 
         public User(DateTime birthday, string lastname, string name, string patronymic)
         {
-            if (!IsStrValid(lastname))
-            {
-                return;
-            }
-            if(!IsStrValid(name))
-            {
-                return;
-            }
-            if(!IsStrValid(patronymic))
-            {
-                return;
-            }
-            else
-            {
-                this.birthday = birthday;
-                this.name = name;
-                this.lastname = lastname;
-                this.patronymic = patronymic;
-            }
+            StrToValidState(lastname);
+            StrToValidState(name);
+            StrToValidState(patronymic);
+
+            DateTime localDate = DateTime.Now;
+
+            this.birthday = birthday;
+            this.age = localDate.Year - birthday.Year;
+            this.name = name;
+            this.lastname = lastname;
+            this.patronymic = patronymic;
         }
 
         public string Name
         {
             get { return this.name; }
-            set 
-            {
-                if(IsStrValid(value))
-                {
-                    this.name = value;
-                }
-            }
         }
 
-        public string Lastname
+        public string LastName
         {
             get { return this.lastname; }
-            set
-            {
-                if (IsStrValid(value))
-                {
-                    this.lastname = value;
-                }
-            }
         }
 
         public string Patronymic
         {
             get { return this.patronymic; }
-            set
-            {
-                if (IsStrValid(value))
-                {
-                    this.patronymic = value;
-                }
-            }
         }
 
-        public DateTime Birthday
+        public int Age
         {
-            get { return this.birthday; }
-            set 
-            {
-                this.birthday = value;
-            }
+            get { return this.age; }
         }
 
 
-        private bool IsStrValid(string str)
+        private void StrToValidState(string str)
         {
             if(str == null)
             {
-                str = "";
-                Console.WriteLine("Warning! You are passing a null value to the variable {0}", nameof(str));
-                return true;
+                str = String.Empty;
+                Console.WriteLine("Warning! You are passing a null value to the variable [{0}]", nameof(str));
             }
-
-            //if (StrHasDigitsOrPunctuation(str))
-            //{
-            //    throw new ArgumentException(String.Format("Field [{0}] contains digits or punctuation!", str), "str");
-            //}
-
-            return true;
-        }
-
-        private bool StrHasDigitsOrPunctuation(string str)
-        {
-            foreach (char c in str)
-            {
-                if (char.IsDigit(c) || char.IsPunctuation(c))
-                    return true;
-            }
-
-            return false;
         }
 
         public string UserInfo()
         {
-            return lastname + " " + name + " " + patronymic + " (" + birthday.ToString() + ")";
+            return lastname + " " + name + " " + patronymic + " " + age + " years" + " (" + birthday.ToString() + ")";
         }
     }
 }
