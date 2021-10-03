@@ -8,28 +8,26 @@ namespace Task1
         {
             DateTime dateTime = new DateTime(1999, 7, 12);
 
-            //try
-            //{
+            try
+            {
                 User user = new User(dateTime, "Ivanov", "Ivan", "Ivanovich");
                 Console.WriteLine(user.UserInfo());
 
                 user.Lastname = "Smirnov";
                 Console.WriteLine(user.UserInfo());
-            //}
-            //catch (ArgumentNullException exc)
-            //{
-            //    Console.WriteLine($"Error: {exc}");
-            //}
-            //catch (ArgumentOutOfRangeException exc)
-            //{
-            //    Console.WriteLine($"Error: {exc}");
-            //}
-            //catch (ArgumentException exc)
-            //{
-            //    Console.WriteLine($"Error: {exc}");
-            //}
-
-            
+            }
+            catch (ArgumentNullException exc)
+            {
+                Console.WriteLine($"Error: {exc}");
+            }
+            catch (ArgumentOutOfRangeException exc)
+            {
+                Console.WriteLine($"Error: {exc}");
+            }
+            catch (ArgumentException exc)
+            {
+                Console.WriteLine($"Error: {exc}");
+            }
         }
     }
 
@@ -42,15 +40,15 @@ namespace Task1
 
         public User(DateTime birthday, string lastname, string name, string patronymic)
         {
-            if (!ValidString(lastname))
+            if (!IsStrValid(lastname))
             {
                 return;
             }
-            if(!ValidString(name))
+            if(!IsStrValid(name))
             {
                 return;
             }
-            if(!ValidString(patronymic))
+            if(!IsStrValid(patronymic))
             {
                 return;
             }
@@ -68,7 +66,7 @@ namespace Task1
             get { return this.name; }
             set 
             {
-                if(ValidString(value))
+                if(IsStrValid(value))
                 {
                     this.name = value;
                 }
@@ -80,7 +78,7 @@ namespace Task1
             get { return this.lastname; }
             set
             {
-                if (ValidString(value))
+                if (IsStrValid(value))
                 {
                     this.lastname = value;
                 }
@@ -92,7 +90,7 @@ namespace Task1
             get { return this.patronymic; }
             set
             {
-                if (ValidString(value))
+                if (IsStrValid(value))
                 {
                     this.patronymic = value;
                 }
@@ -109,27 +107,19 @@ namespace Task1
         }
 
 
-        private bool ValidString(string str)
+        private bool IsStrValid(string str)
         {
             if(str == null)
             {
-                throw new ArgumentNullException(nameof(str));
+                str = "";
+                Console.WriteLine("Warning! You are passing a null value to the variable {0}", nameof(str));
+                return true;
             }
 
-            if(str == "")
-            {
-                throw new ArgumentException("This field can not be empty!");
-            }
-
-            if(str.Length > 40)
-            {
-                throw new ArgumentOutOfRangeException(String.Format("Field [{0}] is too long!", str), "str");
-            }
-
-            if(StrHasDigitsOrPunctuation(str))
-            {
-                throw new ArgumentException(String.Format("Field [{0}] contains digits or punctuation!", str), "str");
-            }
+            //if (StrHasDigitsOrPunctuation(str))
+            //{
+            //    throw new ArgumentException(String.Format("Field [{0}] contains digits or punctuation!", str), "str");
+            //}
 
             return true;
         }
