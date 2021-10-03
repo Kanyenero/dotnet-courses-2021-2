@@ -8,26 +8,26 @@ namespace Task1
         {
             DateTime dateTime = new DateTime(1999, 7, 12);
 
-            try
-            {
+            //try
+            //{
                 User user = new User(dateTime, "Ivanov", "Ivan", "Ivanovich");
                 Console.WriteLine(user.UserInfo());
 
                 user.Lastname = "Smirnov";
                 Console.WriteLine(user.UserInfo());
-            }
-            catch (ArgumentNullException exc)
-            {
-                Console.WriteLine($"Error: {exc}");
-            }
-            catch (ArgumentOutOfRangeException exc)
-            {
-                Console.WriteLine($"Error: {exc}");
-            }
-            catch (ArgumentException exc)
-            {
-                Console.WriteLine($"Error: {exc}");
-            }
+            //}
+            //catch (ArgumentNullException exc)
+            //{
+            //    Console.WriteLine($"Error: {exc}");
+            //}
+            //catch (ArgumentOutOfRangeException exc)
+            //{
+            //    Console.WriteLine($"Error: {exc}");
+            //}
+            //catch (ArgumentException exc)
+            //{
+            //    Console.WriteLine($"Error: {exc}");
+            //}
 
             
         }
