@@ -32,8 +32,8 @@ namespace Task2
             else
             {
                 this.radius = radius;
-                this.circumference = 2 * Math.PI * this.radius;
-                this.area = 2 * Math.PI * Math.Pow(this.radius, 2);
+                circumference = 2 * Math.PI * this.radius;
+                area = Math.PI * Math.Pow(this.radius, 2);
             }
 
             this.x = x;
