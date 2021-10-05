@@ -10,8 +10,8 @@ namespace Task6
             Console.Write("Введите число: ");
             string userInput = Console.ReadLine();
 
-            string basicNumPattern = @"^\-?\d*\.?\d*$";
-            string scienNumPattern = @"^-?[\d.]+(?:e-?\d+)$";
+            string basicNumPattern = @"^[-+]?\d+(\.?\d+)*$";
+            string scienNumPattern = @"^[-+]?[\d.]+(?:e[-+]?\d+)$";
             Regex rgxBasicNum = new Regex(basicNumPattern);
             Regex rgxScienNum = new Regex(scienNumPattern);
 

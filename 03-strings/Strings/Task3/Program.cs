@@ -33,5 +33,6 @@ namespace Task3
 
             Console.WriteLine(infoRow);
         }
+
     }
 }

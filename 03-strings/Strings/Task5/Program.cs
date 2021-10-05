@@ -10,7 +10,7 @@ namespace Task5
             Console.Write("Введите HTML текст: ");
             string userInput = Console.ReadLine();
 
-            string pattern = @"(?:<).*?(?:>)";
+            string pattern = @"<.*?>";
             string replacement = "_";
 
             string result = Regex.Replace(userInput, pattern, replacement);
