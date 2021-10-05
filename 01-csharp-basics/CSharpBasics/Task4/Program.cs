@@ -6,88 +6,65 @@ namespace Task4
     {
         static void Main(string[] args)
         {
-            string userInput = "\0";
-            int num = 0;
-
             Console.WriteLine("Input positive integer non-zero number and see what you got :)");
 
-            num = CheckConsoleInput(ref userInput);
+            int num = CheckConsoleInput();
             BuildFigure(num);
         }
 
         static void BuildFigure(int figNum)
         {
-            int cntr = 0;
-
             for(int i = 1; i <= figNum; i++)
             {
                 for(int j = 0; j < i; j++)
                 {
-                    cntr++;
                     string side = new String('*', j);
                     Console.WriteLine(side.PadLeft(figNum-1) + "*" + side);
                 }
             }
-
-            //Console.WriteLine(cntr);
         }
 
-        static int CheckConsoleInput(ref string input)
+        static int CheckConsoleInput()
         {
-            bool state = false;
+            bool correctInput = false;
             int num = 0;
 
-            while (state == false)
+            while (!correctInput)
             {
                 Console.Write("Your input: ");
-                string userInput1 = Console.ReadLine();
+                string userInput = Console.ReadLine();
 
                 try
                 {
-                    num = int.Parse(userInput1);
+                    num = int.Parse(userInput);
 
                     if (num == 0)
                     {
-                        throw new ZeroException("Zero isn't allowed!");
+                        Console.WriteLine($"Zero ...");
+                        continue;
                     }
 
                     if (num < 0)
                     {
-                        throw new ArgumentOutOfRangeException("Negative numbers isn't allowed!");
+                        Console.WriteLine($"less zero ...");
+                        continue;
                     }
 
-                    state = true;
+                    correctInput = true;
                 }
                 catch (FormatException)
                 {
                     Console.WriteLine("Exception: Use only integer numbers!");
-                    state = false;
-                }
-                catch (ZeroException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                    state = false;
+                    correctInput = false;
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
-                    state = false;
-                }
-
-                if (state == true)
-                {
-                    Console.WriteLine("Number accepted!");
-                    break;
+                    correctInput = false;
                 }
             }
 
             return num;
         }
     }
-
-    class ZeroException : Exception  // My exception type
-    {
-        public ZeroException(string msg) : base(msg) { }
-    }
 }
-

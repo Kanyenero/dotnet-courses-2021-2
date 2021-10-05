@@ -6,78 +6,58 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            string userInput1 = "\0";
-            string userInput2 = "\0";
-            int side1 = 0; 
-            int side2 = 0;
-            int square = 0;
-
             Console.WriteLine("This program calculates rectangle square");
             Console.WriteLine("=================");
 
-            side1 = CheckConsoleInput(ref userInput1);
-            side2 = CheckConsoleInput(ref userInput2); 
+            int side1 = CheckConsoleInput();
+            int side2 = CheckConsoleInput(); 
 
-            square = side1 * side2;
+            int square = side1 * side2;
             Console.WriteLine("=================");
             Console.WriteLine(square);
         }
 
-        static int CheckConsoleInput(ref string input)
+        static int CheckConsoleInput()
         {
-            bool state = false;
+            bool correctInput = false;
             int sideSize = 0;
 
-            while (state == false)
+            while (!correctInput)
             {
                 Console.Write("Input rectangle side size: ");
-                string userInput1 = Console.ReadLine();
+                string userInput = Console.ReadLine();
 
                 try
                 {
-                    sideSize = int.Parse(userInput1);
+                    sideSize = int.Parse(userInput);
 
                     if (sideSize == 0)
                     {
-                        throw new ZeroException("Rectangle side size 0 isn't allowed!");
+                        Console.WriteLine($"Zero is not allowed");
+                        continue;
                     }
 
-                    if(sideSize < 0)
+                    if (sideSize < 0)
                     {
-                        throw new ArgumentOutOfRangeException("Negative rectangle side size isn't allowed!");
+                        Console.WriteLine($"Input number must be greater than zero");
+                        continue;
                     }
 
-                    state = true;
+                    correctInput = true;
                 }
                 catch (FormatException)
                 {
                     Console.WriteLine("Exception. Use only integer numbers!");
-                    state = false;
-                }
-                catch (ZeroException ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                    state = false;
+                    correctInput = false;
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
                     Console.WriteLine($"Exception: {ex.Message}");
-                    state = false;
-                }
-
-                if (state == true)
-                {
-                    Console.WriteLine("Number accepted!");
-                    break;
+                    correctInput = false;
                 }
             }
 
             return sideSize;
         }
-    }
-
-    class ZeroException : Exception  // My exception type
-    {
-        public ZeroException(string msg) : base (msg) { }
     }
 }
