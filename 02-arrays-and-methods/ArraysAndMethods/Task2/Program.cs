@@ -19,11 +19,11 @@ namespace Task2
 
         static void ReplacePositiveElementsWithZero(ref int[,,] array)
         {
-            for (int i = 0; i <= array.Length; i++)
+            for (int i = 0; i < array.GetLength(0); i++)
             {
-                for (int j = 0; j <= array.Length; j++)
+                for (int j = 0; j < array.GetLength(1); j++)
                 {
-                    for (int k = 0; k <= array.Length; k++)
+                    for (int k = 0; k < array.GetLength(2); k++)
                     {
                         if(array[i, j, k] > 0)
                         {
@@ -38,11 +38,11 @@ namespace Task2
         {
             Random rnd = new Random();
 
-            for (int i = 0; i <= array.Length; i++)
+            for (int i = 0; i < array.GetLength(0); i++)
             {
-                for (int j = 0; j <= array.Length; j++)
+                for (int j = 0; j < array.GetLength(1); j++)
                 {
-                    for (int k = 0; k <= array.Length; k++)
+                    for (int k = 0; k < array.GetLength(2); k++)
                     {
                         array[i,j,k] = rnd.Next(-100, 100);
                     }
@@ -52,11 +52,11 @@ namespace Task2
 
         static void Print3DArray(int[,,] array)
         {
-            for (int i = 0; i <= array.Length; i++)
+            for (int i = 0; i < array.GetLength(0); i++)
             {
-                for(int j = 0; j <= array.Length; j++)
+                for(int j = 0; j < array.GetLength(1); j++)
                 {
-                    for(int k = 0; k <= array.Length; k++)
+                    for(int k = 0; k < array.GetLength(2); k++)
                     {
                         Console.WriteLine(array[i,j,k]);
                     }
