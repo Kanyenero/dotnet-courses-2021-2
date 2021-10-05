@@ -20,9 +20,9 @@ namespace Task4
         {
             int sum = 0;
 
-            for (int i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
+            for (int i = 0; i <= array.Length; i++)
             {
-                for (int j = array.GetLowerBound(1); j <= array.GetUpperBound(1); j++)
+                for (int j = 0; j <= array.Length; j++)
                 {
                     if((i + j) % 2 == 0)
                     {
@@ -38,9 +38,9 @@ namespace Task4
         {
             Random rnd = new Random();
 
-            for (int i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
+            for (int i = 0; i <= array.Length; i++)
             {
-                for(int j = array.GetLowerBound(1); j <= array.GetUpperBound(1); j++)
+                for(int j = 0; j <= array.Length; j++)
                 {
                     array[i,j] = rnd.Next(-100, 100);
                 }
@@ -49,9 +49,9 @@ namespace Task4
 
         static void PrintArray(ref int[,] array)
         {
-            for (int i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
+            for (int i = 0; i <= array.Length; i++)
             {
-                for (int j = array.GetLowerBound(1); j <= array.GetUpperBound(1); j++)
+                for (int j = 0; j <= array.Length; j++)
                 {
                     Console.WriteLine(array[i,j]);
                 }

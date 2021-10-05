@@ -22,7 +22,10 @@ namespace Task3
 
             for (int i = 0; i < array.Length; i++)
             {
-                if (array[i] > 0) { sum += array[i]; }
+                if (array[i] > 0) 
+                {
+                    sum += array[i]; 
+                }
             }
 
             return sum;
@@ -32,7 +35,7 @@ namespace Task3
         {
             Random rnd = new Random();
 
-            for (int i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
+            for (int i = 0; i <= array.Length; i++)
             {
                 array[i] = rnd.Next(-100, 100);
             }
