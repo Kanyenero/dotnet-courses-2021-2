@@ -178,6 +178,13 @@ namespace Task4
             set { _mana = value; }
         }
 
+        public void GetBonus(Bonus bonus)
+        {
+            if (bonus.Type == 0) { Health += bonus.EffectValue; }
+            //else if (Type == 1) { player.Armor += EffectValue; }
+            //else if (Type == 2) { player.Mana += EffectValue; }
+        }
+
         public void GoLeft() { }
         public void GoRight() { }
         public void GoForward() { }
@@ -297,12 +304,12 @@ namespace Task4
         }
 
 
-        public void SetEffect(Player player)
-        {
-            if (Type == 0) { player.Health += EffectValue; }
-            else if (Type == 1) { player.Armor += EffectValue; }
-            else if (Type == 2) { player.Mana += EffectValue; }
-        }
+        //public void SetEffect(Player player)
+        //{
+        //    if (Type == 0) { player.Health += EffectValue; }
+        //    else if (Type == 1) { player.Armor += EffectValue; }
+        //    else if (Type == 2) { player.Mana += EffectValue; }
+        //}
         public void Place(int x, int y) { }
         public void Remove(int x, int y) { }
         public void IsObstacle(bool obstacle) { }

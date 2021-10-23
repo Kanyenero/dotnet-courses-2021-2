@@ -29,12 +29,8 @@ namespace Task2
             {
                 throw new ArgumentOutOfRangeException("Radius can not be less than zero", nameof(radius));
             }
-            else
-            {
-                this.radius = radius;
-                circumference = 2 * Math.PI * this.radius;
-                area = Math.PI * Math.Pow(this.radius, 2);
-            }
+
+            this.radius = radius;
 
             this.x = x;
             this.y = y;
@@ -42,27 +38,35 @@ namespace Task2
 
         public int Radius
         {
-            get { return this.radius; }
+            get { return radius; }
         }
 
         public int X
         {
-            get { return this.x; }
+            get { return x; }
         }
 
         public int Y
         {
-            get { return this.y; }
+            get { return y; }
         }
 
         public double Circumference
         {
-            get { return this.circumference; }
+            get 
+            {
+                circumference = 2 * Math.PI * radius;
+                return circumference; 
+            }
         }
 
         public double Area
         {
-            get { return this.area; }
+            get 
+            {
+                area = Math.PI * Math.Pow(radius, 2);
+                return area; 
+            }
         }
 
         public void ShowInfo()

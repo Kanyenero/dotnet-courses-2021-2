@@ -34,7 +34,7 @@ namespace Task1
         private string name = string.Empty, 
                        lastname = string.Empty, 
                        patronymic = string.Empty;
-        int age;
+
 
         public User(DateTime birthday, string lastname, string name, string patronymic)
         {
@@ -42,10 +42,10 @@ namespace Task1
             StrToValidState(name);
             StrToValidState(patronymic);
 
-            DateTime localDate = DateTime.Now;
+            
 
             this.birthday = birthday;
-            this.age = localDate.Year - birthday.Year;
+            
             this.name = name;
             this.lastname = lastname;
             this.patronymic = patronymic;
@@ -53,22 +53,27 @@ namespace Task1
 
         public string Name
         {
-            get { return this.name; }
+            get { return name; }
         }
 
         public string LastName
         {
-            get { return this.lastname; }
+            get { return lastname; }
         }
 
         public string Patronymic
         {
-            get { return this.patronymic; }
+            get { return patronymic; }
         }
 
         public int Age
         {
-            get { return this.age; }
+            get 
+            {
+                DateTime localDate = DateTime.Now;
+                var age = localDate.Year - birthday.Year;
+                return age; 
+            }
         }
 
 

@@ -53,8 +53,15 @@ namespace Task3
 
 		public bool MoveNext()
 		{
-			currentIndex++;
-			return true;
+			if(currentIndex < )
+            {
+				currentIndex++;
+				return true;
+			}
+            else
+            {
+				return false;
+			}
 		}
 
 		public void Reset()
@@ -88,9 +95,17 @@ namespace Task3
 		}
 
 		public bool MoveNext()
-		{
-			currentIndex = currentIndex < series.Length - 1 ? currentIndex + 1 : 0;
-			return true;
+		{ 
+			if (currentIndex < series.Length - 1)
+            {
+				currentIndex++;
+				return true;
+			}
+            else
+            {
+				currentIndex = 0;
+				return false;
+            }
 		}
 
 		public void Reset()

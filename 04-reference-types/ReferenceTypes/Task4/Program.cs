@@ -51,6 +51,16 @@ namespace Task4
                 testMyString1.ToString(),
                 (testMyString1 == testMyString1).ToString());
 
+            if(testMyString1 != null)
+            {
+                Console.WriteLine("!!!!!!!!!!!!!!");
+            }
+            else 
+            {
+                Console.WriteLine("++++++++++++++");
+
+            }
+
 
             Console.WriteLine();
 
@@ -77,20 +87,18 @@ namespace Task4
 
         public MyString(string prototype)
         {
-            if(prototype == null)
+            if(prototype is null)
             {
                 myString = new char[0];
                 Console.WriteLine("Warning: You are trying to assign a null value to MyString object");
             }
             else
-            {
                 myString = prototype.ToCharArray();
-            }
         }
 
         public MyString(char[] prototype)
         {
-            if(prototype == null)
+            if(prototype is null)
             {
                 myString = new char[0];
                 Console.WriteLine("Warning: You are trying to assign a null value to MyString object");
@@ -114,17 +122,24 @@ namespace Task4
         public static MyString operator + (MyString myStr1, MyString myStr2)
         {
             MyString resMyStr = new MyString();
-            resMyStr.myString = new char[myStr1.myString.Length + myStr2.myString.Length];
 
-            for(int resItr = 0; resItr < resMyStr.myString.Length; resItr++)
+            if (myStr1 is null || myStr2 is null)
+                Console.WriteLine("Incorrect parameter");
+
+            else
             {
-                if(resItr < myStr1.myString.Length)
+                resMyStr.myString = new char[myStr1.myString.Length + myStr2.myString.Length];
+
+                for (int resItr = 0; resItr < resMyStr.myString.Length; resItr++)
                 {
-                    resMyStr.myString[resItr] = myStr1.myString[resItr];
-                }
-                else
-                {
-                    resMyStr.myString[resItr] = myStr2.myString[resItr - myStr1.myString.Length];
+                    if (resItr < myStr1.myString.Length)
+                    {
+                        resMyStr.myString[resItr] = myStr1.myString[resItr];
+                    }
+                    else
+                    {
+                        resMyStr.myString[resItr] = myStr2.myString[resItr - myStr1.myString.Length];
+                    }
                 }
             }
 
@@ -134,32 +149,39 @@ namespace Task4
         public static MyString operator - (MyString src, MyString trg)
         {
             MyString res = new MyString();
-            res.myString = new char[src.myString.Length - trg.myString.Length];
 
-            bool firstTargetOccurence = false;
-            int resultItr = 0;
+            if (src is null || trg is null)
+                Console.WriteLine("Incorrect parameter");
 
-            for (int srcItr = 0; srcItr < src.myString.Length; srcItr++)
+            else
             {
-                char[] tmp = new char[trg.myString.Length]; // tmp buff
+                res.myString = new char[src.myString.Length - trg.myString.Length];
 
-                if (srcItr <= res.myString.Length)
+                bool firstTargetOccurence = false;
+                int resultItr = 0;
+
+                for (int srcItr = 0; srcItr < src.myString.Length; srcItr++)
                 {
-                    for(int tmpItr = 0; tmpItr < tmp.Length; tmpItr++) // copy to temp
+                    char[] tmp = new char[trg.myString.Length]; // tmp buff
+
+                    if (srcItr <= res.myString.Length)
                     {
-                         tmp[tmpItr] = src.myString[srcItr + tmpItr];
+                        for (int tmpItr = 0; tmpItr < tmp.Length; tmpItr++) // copy to temp
+                        {
+                            tmp[tmpItr] = src.myString[srcItr + tmpItr];
+                        }
                     }
-                }
 
-                if (trg.myString.SequenceEqual(tmp) && firstTargetOccurence == false)
-                {
-                    firstTargetOccurence = true; // lock
-                    srcItr += tmp.Length - 1; // skip idxs
-                }
-                else
-                {
-                    res.myString[resultItr] = src.myString[srcItr]; // save
-                    resultItr++;
+                    if (trg.myString.SequenceEqual(tmp) && firstTargetOccurence == false)
+                    {
+                        firstTargetOccurence = true; // lock
+                        srcItr += tmp.Length - 1; // skip idxs
+                    }
+                    else
+                    {
+                        res.myString[resultItr] = src.myString[srcItr]; // save
+                        resultItr++;
+                    }
                 }
             }
 
@@ -168,39 +190,45 @@ namespace Task4
 
         public static bool operator ==(MyString myStr1, MyString myStr2)
         {
-            if(myStr1.myString.Length == myStr2.myString.Length)
-            {
-                for (int myStrItr = 0; myStrItr < myStr1.myString.Length; myStrItr++)
-                {
-                    if(myStr1.myString[myStrItr] != myStr2.myString[myStrItr])
-                    {
-                        return false;
-                    }
-                }
-            }
+            if (myStr1 is null || myStr2 is null)
+                Console.WriteLine("Incorrect parameter");
+
             else
             {
-                return false;
+                if (myStr1.myString.Length == myStr2.myString.Length)
+                {
+                    for (int myStrItr = 0; myStrItr < myStr1.myString.Length; myStrItr++)
+                    {
+                        if (myStr1.myString[myStrItr] != myStr2.myString[myStrItr])
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                    return false;
             }
-
+            
             return true;
         }
 
         public static bool operator !=(MyString myStr1, MyString myStr2)
         {
-            if (myStr1.myString.Length == myStr2.myString.Length)
-            {
-                for (int myStrItr = 0; myStrItr < myStr1.myString.Length; myStrItr++)
-                {
-                    if (myStr1.myString[myStrItr] != myStr2.myString[myStrItr])
-                    {
-                        return true;
-                    }
-                }
-            }
+            if(myStr1 is null || myStr2 is null)
+                Console.WriteLine("Incorrect parameter");
+
             else
             {
-                return true;
+                if (myStr1.myString.Length == myStr2.myString.Length)
+                {
+                    for (int myStrItr = 0; myStrItr < myStr1.myString.Length; myStrItr++)
+                    {
+                        if (myStr1.myString[myStrItr] != myStr2.myString[myStrItr])
+                            return true;
+                    }
+                }
+                else
+                    return true;
             }
 
             return false;

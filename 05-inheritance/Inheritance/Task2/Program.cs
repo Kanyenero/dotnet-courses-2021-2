@@ -94,13 +94,8 @@ namespace Task2
                 throw new ArgumentOutOfRangeException("Inner round radius can not be greater than outter radius and less than or equal to zero", 
                     nameof(innerRadius));
             }
-            else
-            {
-                _innerRadius = innerRadius;
 
-                _circumference = 2 * Math.PI * (Radius + _innerRadius);
-                _area = Math.PI * (Math.Pow(Radius, 2) - Math.Pow(_innerRadius, 2));
-            }
+            _innerRadius = innerRadius;  
         }
 
         public double InnerRadius
@@ -110,12 +105,20 @@ namespace Task2
 
         public new double Circumference
         {
-            get { return _circumference; }
+            get 
+            {
+                _circumference = 2 * Math.PI * (Radius + _innerRadius);
+                return _circumference; 
+            }
         }
 
         public new double Area
         {
-            get { return _area; }
+            get 
+            {
+                _area = Math.PI * (Math.Pow(Radius, 2) - Math.Pow(_innerRadius, 2));
+                return _area; 
+            }
         }
 
         public string ShowRingInfo()
