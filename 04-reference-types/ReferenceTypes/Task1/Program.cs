@@ -8,23 +8,8 @@ namespace Task1
         {
             DateTime dateTime = new DateTime(1999, 7, 12);
              
-            try
-            {
-                User user = new User(dateTime, "Ivanov", "Ivan", "Ivanovich");
-                Console.WriteLine(user.UserInfo());
-            }
-            catch (ArgumentNullException exc)
-            {
-                Console.WriteLine($"Error: {exc}");
-            }
-            catch (ArgumentOutOfRangeException exc)
-            {
-                Console.WriteLine($"Error: {exc}");
-            }
-            catch (ArgumentException exc)
-            {
-                Console.WriteLine($"Error: {exc}");
-            }
+            User user = new User(dateTime, "Ivanov", "Ivan", "Ivanovich");
+            Console.WriteLine(user.UserInfo());
         }
     }
 
@@ -38,11 +23,9 @@ namespace Task1
 
         public User(DateTime birthday, string lastname, string name, string patronymic)
         {
-            StrToValidState(lastname);
-            StrToValidState(name);
-            StrToValidState(patronymic);
-
-            
+            CheckStr(lastname);
+            CheckStr(name);
+            CheckStr(patronymic);
 
             this.birthday = birthday;
             
@@ -76,19 +59,21 @@ namespace Task1
             }
         }
 
-
-        private void StrToValidState(string str)
+        private void CheckStr(string str)
         {
-            if(str == null)
-            {
-                str = String.Empty;
-                Console.WriteLine("Warning! You are passing a null value to the variable [{0}]", nameof(str));
-            }
+            if(str is null)
+                throw new ArgumentNullException("Str is null");
+
+            char[] arr = str.ToCharArray();
+
+            for (int i = 0; i < str.Length; i++)
+                if (Char.IsDigit(arr[i]))
+                    throw new ArgumentException("Str cannot contain digits");
         }
 
         public string UserInfo()
         {
-            return lastname + " " + name + " " + patronymic + " " + age + " years" + " (" + birthday.ToString() + ")";
+            return lastname + " " + name + " " + patronymic + " " + Age + " years" + " (" + birthday.ToString() + ")";
         }
     }
 }
