@@ -7,7 +7,7 @@ namespace Task1
         static void Main(string[] args)
         {
             DateTime dateTime = new DateTime(1999, 7, 12);
-
+             
             try
             {
                 User user = new User(dateTime, "Ivanov", "Ivan", "Ivanovich");
