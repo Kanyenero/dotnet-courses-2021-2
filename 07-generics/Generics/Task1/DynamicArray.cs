@@ -5,27 +5,28 @@ using System.Text;
 namespace Task1
 {
     // Аргумент типа данных DynamicArray дожен иметь конструктор без параметров!
-    class DynamicArray <CollectionElement> where CollectionElement : new()
+    class DynamicArray <CollectionElement> where CollectionElement : notnull, new()
     {
         // Конструктор по умолчанию. Создается массив емкости 8 ячеек
         public DynamicArray()
         {
             Length = 8;
-            _array = new CollectionElement[Length];
+            _array = new CollectionElement[Capacity];
         }
 
         // Конструктор с параметром. Создается новый массив заданной емкости
         public DynamicArray(uint length)
         {
             Length = length;
-            _array = new CollectionElement[Length];
+            _array = new CollectionElement[Capacity];
         }
 
         // Конструктор с параметром. Создается новый массив заданной емкости
         public DynamicArray(CollectionElement[] array)
         {
-            _array = new CollectionElement[array.Length];
-            Array.Copy(array, _array, array.Length);
+            Length = (uint)array.Length;
+            _array = new CollectionElement[Capacity];
+            Array.Copy(array, _array, Length);
         }
 
         private uint _length; // Размер массива
@@ -42,7 +43,10 @@ namespace Task1
         public uint Capacity { get { return _capacity; } }
 
 
-        public CollectionElement[] _array; // Массив
+        // Массив, с которым мы работаем
+        public CollectionElement[] _array;
+
+        // Индексатор, позволяющий использовать обращение вида []
         public CollectionElement this[uint idx]
         {
             get 
@@ -67,7 +71,10 @@ namespace Task1
         public void Add(CollectionElement element)
         {
             Length++;
-            Array.Resize<CollectionElement>(ref _array, (int)Length);
+
+            // Задать новый размер массива, исходя из изменившегося
+            // значения его длины (а следовательно и емкости)
+            Array.Resize<CollectionElement>(ref _array, (int)Capacity);
             _array[Length - 1] = element;
         }
 
@@ -77,7 +84,9 @@ namespace Task1
             uint old_length = Length;
             Length += (uint)range.Length;
 
-            Array.Resize<CollectionElement>(ref _array, (int)Length);
+            // Задать новый размер массива, исходя из изменившегося
+            // значения его длины (а следовательно и емкости)
+            Array.Resize<CollectionElement>(ref _array, (int)Capacity);
 
             range.CopyTo(_array, old_length);
         }
@@ -95,12 +104,15 @@ namespace Task1
             {
                 if (_array[i].Equals(element))
                 {
+                    // Очистить данные этой ячейки
+                    _array[i] = default(CollectionElement);
+
                     // Сместить все элементы на одну позицию влево
                     for (uint j = i; j < Length - 1; j++)
                         _array[j] = _array[j + 1];
 
-                    // Отсечь ненужную ячейку в конце
-                    Array.Resize<CollectionElement>(ref _array, (int)Length - 1);
+                    // Очистить последнюю ячейку
+                    _array[Length - 1] = default(CollectionElement);
 
                     Length--;
                     status = true;
@@ -122,22 +134,27 @@ namespace Task1
             if (idx > Length)
                 throw new ArgumentOutOfRangeException("Array out of bounds");
 
-            // Расширить массив
-            Array.Resize<CollectionElement>(ref _array, (int)Length);
+            // Задать новый размер массива, исходя из изменившегося
+            // значения его длины (а следовательно и емкости)
+            Array.Resize<CollectionElement>(ref _array, (int)Capacity);
 
             // Сместить все элементы на одну позицию вправо
             for (uint i = Length - 1; i > idx; i--)
                 _array[i] = _array[i - 1];
 
+            // Очистить ячейку
+            _array[idx] = default(CollectionElement);
+
+            // Записать новые данные в ячейку
             _array[idx] = element;
         }
 
         // Выводит созданный массив в консоль
         public void Print()
         {
-            Console.WriteLine($"Array [size: {Length}] [capacity: {Capacity}]");
+            Console.WriteLine($"Array [length: {Length}] [capacity: {Capacity}]");
 
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < Capacity; i++)
                 Console.WriteLine($"Array [idx: {i}] [val: {_array[i]}]");
 
             Console.WriteLine();
