@@ -6,9 +6,9 @@ namespace Task3
     {
         static void Main(string[] args)
         {
-			ISeries progression = new ArithmeticalProgression(2, 2);
+			ISeries progression = new ArithmeticalProgression(2, 2, 10);
 			Console.WriteLine("Progression:");
-			PrintSeries(progression, 10);
+			PrintSeries(progression, 15);
 
 			IIndexable list = new List(new double[] { 5, 8, 6, 3, 1 });
 			Console.WriteLine("List:");
@@ -37,12 +37,13 @@ namespace Task3
 	public class ArithmeticalProgression : IIndexableSeries
 	{
 		double start, step;
-		int currentIndex;
+		int currentIndex, maxIndex;
 
-		public ArithmeticalProgression(double start, double step)
+		public ArithmeticalProgression(double start, double step, int maxIndex)
 		{
 			this.start = start;
 			this.step = step;
+			this.maxIndex = maxIndex;
 			this.currentIndex = 1;
 		}
 
@@ -53,7 +54,7 @@ namespace Task3
 
 		public bool MoveNext()
 		{
-			if(currentIndex < )
+			if(currentIndex < maxIndex)
             {
 				currentIndex++;
 				return true;
@@ -71,10 +72,7 @@ namespace Task3
 
         public double this[int index]
         {
-            get
-            {
-                return start + step * index;
-            }
+			get { return start + step * index; }
         }
     }
 
