@@ -58,7 +58,6 @@ namespace Task4
             else 
             {
                 Console.WriteLine("++++++++++++++");
-
             }
 
 
@@ -151,7 +150,9 @@ namespace Task4
             MyString res = new MyString();
 
             if (src is null || trg is null)
-                Console.WriteLine("Incorrect parameter");
+            {
+                throw new ArgumentNullException();
+            }
 
             else
             {
@@ -214,24 +215,7 @@ namespace Task4
 
         public static bool operator !=(MyString myStr1, MyString myStr2)
         {
-            if(myStr1 is null || myStr2 is null)
-                Console.WriteLine("Incorrect parameter");
-
-            else
-            {
-                if (myStr1.myString.Length == myStr2.myString.Length)
-                {
-                    for (int myStrItr = 0; myStrItr < myStr1.myString.Length; myStrItr++)
-                    {
-                        if (myStr1.myString[myStrItr] != myStr2.myString[myStrItr])
-                            return true;
-                    }
-                }
-                else
-                    return true;
-            }
-
-            return false;
+            return !(myStr1 == myStr2);
         }
     }
 }
