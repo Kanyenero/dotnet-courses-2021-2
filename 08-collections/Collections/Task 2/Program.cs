@@ -27,7 +27,7 @@ namespace Task_2
 
             Console.WriteLine(arr.ToString());
 
-            foreach(Person p in arr)
+            foreach (Person p in arr)
             {
                 Console.WriteLine(p);
             }

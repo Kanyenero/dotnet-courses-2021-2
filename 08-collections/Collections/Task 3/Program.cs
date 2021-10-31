@@ -26,18 +26,18 @@ namespace Task_3
 
             Console.WriteLine("Here is a result dictionary:\n");
 
-            foreach(KeyValuePair<string, int> kvp in dictionary)
+            foreach (KeyValuePair<string, int> kvp in dictionary)
                 Console.WriteLine("[word]\t {0}\t [key]\t {1}", kvp.Value, kvp.Key);
         }
 
-        static Dictionary <string, int> CountWords(string str)
+        static Dictionary<string, int> CountWords(string str)
         {
             Dictionary<string, int> dict = new Dictionary<string, int>();
             Regex rgx = new Regex(@"\b\w+\b");
 
             MatchCollection matches = rgx.Matches(str);
 
-            foreach(Match item in matches)
+            foreach (Match item in matches)
             {
                 string word = item.ToString().ToLower();
 
@@ -46,7 +46,7 @@ namespace Task_3
                     dict[word]++; // increment
                     continue;
                 }
-                    
+
                 dict.Add(word, 1);
             }
 

@@ -15,14 +15,14 @@ namespace Collections
 
             for (int i = 0; i < size; i++)
             {
-                list.Add(i+1);
+                list.Add(i + 1);
                 Console.WriteLine(list[i]);
             }
-                
+
             RemoveEachSecondItem(list);
         }
 
-        static void RemoveEachSecondItem<T>(ICollection <T> collection)
+        static void RemoveEachSecondItem<T>(ICollection<T> collection)
         {
             int steps = 0;
             int count = 0;
@@ -47,7 +47,7 @@ namespace Collections
                 steps++;
             }
 
-            foreach(T item in collection)
+            foreach (T item in collection)
             {
                 Console.WriteLine("Answer: {0}", item);
             }
