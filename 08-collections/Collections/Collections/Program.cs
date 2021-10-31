@@ -24,14 +24,14 @@ namespace Collections
 
         static void RemoveEachSecondItem<T>(ICollection <T> collection)
         {
-            int steps = 0, count = 0;
-            ICollection<T> collection2 = collection.ToList();
+            int steps = 0;
+            int count = 0;
 
-            while (collection.Count != 1)
+            while (collection.Count > 1)
             {
                 Console.WriteLine("Step {0}", steps + 1);
 
-                foreach (T item in collection2)
+                foreach (T item in collection.ToList())
                 {
                     count++;
 
@@ -44,7 +44,6 @@ namespace Collections
                     }
                 }
 
-                collection2 = collection.ToList();
                 steps++;
             }
 

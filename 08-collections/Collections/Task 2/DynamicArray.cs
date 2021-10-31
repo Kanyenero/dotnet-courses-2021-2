@@ -5,86 +5,60 @@ using System.Text;
 namespace Task_2
 {
     // Аргумент типа данных DynamicArray дожен иметь конструктор без параметров!
-    class DynamicArray <T> : IEnumerable <T> where T : notnull, new()
+    class DynamicArray<TCollectionElement> : IEnumerable<TCollectionElement> where TCollectionElement : new()
     {
-
-                        /* Конструкторы */
-
-
-        // Конструктор по умолчанию. Создается массив емкостью 8 ячеек
-        public DynamicArray()
-        {
-            Length = 8;
-            _array = new T[Capacity];
-        }
-
         // Конструктор с параметром. Создается новый массив заданной емкости
-        public DynamicArray(uint length)
+        public DynamicArray(int capacity)
         {
-            Length = length;
-            _array = new T[Capacity];
+            _array = new TCollectionElement[capacity];
+            _length = 0;
         }
 
-        // Конструктор с параметром. Создается новый массив из уже существующего
-        public DynamicArray(T[] collection)
+        // Конструктор с параметром. Создается новый массив из существующего
+        public DynamicArray(TCollectionElement[] array)
+            : this(array.Length)
         {
-            Length = (uint)collection.Length;
-            _array = new T[Capacity];
-            Array.Copy(collection, _array, Length);
+            _length = array.Length;
+            Array.Copy(array, _array, _length);
+        }
+
+        // Конструктор по умолчанию. Создается массив емкости 8 ячеек
+        public DynamicArray()
+            : this(8)
+        {
         }
 
         // Конструктор, принимающий коллекцию, реализующую интерфейс IEnumerable
-        public DynamicArray (IEnumerable <T> collection)
+        public DynamicArray(IEnumerable<TCollectionElement> collection) : this()
         {
             // Вычислить размер коллекции
-            uint collectionSize = 0;
-            foreach (T item in collection)
+            int collectionSize = 0;
+            foreach (TCollectionElement item in collection)
                 collectionSize++;
 
-            // Выделить память под массив
-            Length = collectionSize;
-            _array = new T[Capacity];
+            Resize(collectionSize);
 
             // Копируем данные из коллекции в массив
             int i = 0;
-            foreach (T item in collection)
+            foreach (TCollectionElement item in collection)
             {
                 _array[i] = item;
                 i++;
             }
         }
 
+        private int _length; // Размер массива
 
-                        /* Поля */
-
-
-        private uint _length; // Размер массива
-        private uint _capacity = 1; // Емкость массива
-        public T[] _array; // Массив, с которым мы работаем
-        
-
-                        /* Свойства */
+        // Свойства позволят пользователю получить значения длины и емкости массива
+        public int Length { get { return _length; } }
+        public int Capacity { get { return _array.Length; } }
 
 
-        // Свойства длины массива
-        public uint Length
-        {
-            get { return _length; }
-            set
-            {
-                while (value > _capacity) { _capacity *= 2; }
-                _length = value;
-            }
-        }
-
-        // Свойства емкости массива
-        public uint Capacity 
-        { 
-            get { return _capacity; } 
-        }
+        // Массив, с которым мы работаем
+        public TCollectionElement[] _array;
 
         // Индексатор, позволяющий использовать обращение вида []
-        public T this[uint idx]
+        public TCollectionElement this[int idx]
         {
             get
             {
@@ -102,34 +76,31 @@ namespace Task_2
             }
         }
 
+        // Вынесем общий метод увеличения длины, чтобы было видно очевидно, когда что как увеличивается.
+        // Метод должен уметь увеличивать массив - то есть ресайзить его.
+        public void Resize(int length)
+        {
+            if (_array.Length < length)
+                Array.Resize<TCollectionElement>(ref _array, length * 2);
 
-                        /* Методы */
-
+            _length = length;
+        }
 
         // Метод добавляет в конец массива 1 элемент.
-        // При нехватке места для добавления элемента
-        // емкость массива расширяется в 2 раза
-        public void Add(T element)
+        public void Add(TCollectionElement element)
         {
-            Length++;
-
-            // Задать новый размер массива, исходя из изменившегося
-            // значения его длины (а следовательно и емкости)
-            Array.Resize<T>(ref _array, (int)Capacity);
-            _array[Length - 1] = element;
+            _length++;
+            Resize(_length);
+            _array[_length - 1] = element;
         }
 
         // Добавляет в конец массива содержимое переданного массива
-        public void AddRange(T[] range)
+        public void AddRange(TCollectionElement[] range)
         {
-            uint old_length = Length;
-            Length += (uint)range.Length;
+            int old_length = _length;
+            Resize(_length + range.Length);
 
-            // Задать новый размер массива, исходя из изменившегося
-            // значения его длины (а следовательно и емкости)
-            Array.Resize<T>(ref _array, (int)Capacity);
-
-            range.CopyTo(_array, old_length);
+            Array.Copy(range, 0, _array, old_length, range.Length);
         }
 
         // Удаляет из коллекции указанный элемент.
@@ -137,82 +108,59 @@ namespace Task_2
         // и false в противном случае.
         // При удалении элементов уменьшается длина (Length),
         // а реальная емкость массива (Capacity) не уменьшается.
-        public bool Remove(T element)
+        public bool Remove(TCollectionElement element)
         {
-            bool status = false;
+            bool removed = false;
 
-            for (uint i = 0; i < Length; i++)
+            for (int i = 0; i < _length; i++)
             {
                 if (_array[i].Equals(element))
                 {
-                    // Очистить данные этой ячейки
-                    _array[i] = default(T);
+                    Array.Copy(_array, i + 1, _array, i, _length - i);
 
-                    // Сместить все элементы на одну позицию влево
-                    for (uint j = i; j < Length - 1; j++)
-                        _array[j] = _array[j + 1];
-
-                    // Очистить последнюю ячейку
-                    _array[Length - 1] = default(T);
-
-                    Length--;
-                    status = true;
+                    _length--;
+                    removed = true;
                     break;
                 }
             }
 
-            if (status == false) Console.WriteLine($"Element {element} doesn't exist\n");
-
-            return status;
+            return removed;
         }
 
         // Добавляет элемент в произвольную позицию массива.
         // При выходе за границу массива генерируется исключение
-        public void Insert(T element, uint idx)
+        public void Insert(TCollectionElement element, int idx)
         {
-            Length++;
-
-            if (idx > Length)
+            if (idx > _length)
                 throw new ArgumentOutOfRangeException("Array out of bounds");
 
-            // Задать новый размер массива, исходя из изменившегося
-            // значения его длины (а следовательно и емкости)
-            Array.Resize<T>(ref _array, (int)Capacity);
+            _length++;
+            Resize(_length);
 
-            // Сместить все элементы на одну позицию вправо
-            for (uint i = Length - 1; i > idx; i--)
-                _array[i] = _array[i - 1];
+            Array.Copy(_array, idx, _array, idx + 1, _length - idx);
 
-            // Очистить ячейку
-            _array[idx] = default(T);
-
-            // Записать новые данные в ячейку
+            // Перезаписать данные в ячейке
             _array[idx] = element;
         }
 
-        // Выводит созданный массив в консоль
-        public void Print()
+        public override string ToString()
         {
-            Console.WriteLine($"Array [length: {Length}] [capacity: {Capacity}]");
+            //StringBuilder
+            StringBuilder sb = new StringBuilder();
+            sb.Append(String.Format("Array [length: {0}] [capacity: {1}]\n", _length, _array.Length));
 
-            for (int i = 0; i < Capacity; i++)
-                Console.WriteLine($"Array [idx: {i}] [val: {_array[i]}]");
+            for (int i = 0; i < _array.Length; i++)
+                sb.Append(String.Format("Array [idx: {0}] [val: {1}]\n", i, _array[i]));
 
-            Console.WriteLine();
+            return sb.ToString();
         }
-
 
         /* Методы, реализующие интерфейс IEnumerable */
-
-
-        private IEnumerable<T> GetValues()
+        public IEnumerator<TCollectionElement> GetEnumerator()
         {
-            foreach (T item in _array)
+            // Нужно взять только Length элементов
+            foreach (TCollectionElement item in _array)
                 yield return item;
-        }
-        public IEnumerator<T> GetEnumerator()
-        {
-            return GetValues().GetEnumerator();
         }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

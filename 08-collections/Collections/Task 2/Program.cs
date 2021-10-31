@@ -25,7 +25,7 @@ namespace Task_2
 
             DynamicArray<Person> arr = new DynamicArray<Person>(list);
 
-            arr.Print();
+            Console.WriteLine(arr.ToString());
 
             foreach(Person p in arr)
             {
