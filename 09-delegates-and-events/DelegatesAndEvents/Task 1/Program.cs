@@ -22,8 +22,6 @@ namespace Task_1
 
             Function fnc = new Function(CompareStrings);
             Sort(strs, fnc);
-
-            string s = strs[0];
         }
 
         // Наш делегат
