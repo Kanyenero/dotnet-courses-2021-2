@@ -52,10 +52,8 @@ namespace WinForms
 
                 EnableUI(false);
 
-                if (listBoxChoosedRewardsList.Items.Count == 0)
-                    buttonRemoveListBoxItem.Enabled = false;
-                else
-                    buttonRemoveListBoxItem.Enabled = true;
+                InitializeRewardTextBoxes(person, allRewards);
+                InitializeRewardButtons();
             }
 
             if (task == FormTask.Edit)
@@ -145,8 +143,6 @@ namespace WinForms
             buttonAccept.Enabled = state;
             buttonAddListBoxItem.Enabled = state;
             buttonRemoveListBoxItem.Enabled = state;
-            listBoxRewardsList.Enabled = state;
-            listBoxChoosedRewardsList.Enabled = state;
         }
 
 

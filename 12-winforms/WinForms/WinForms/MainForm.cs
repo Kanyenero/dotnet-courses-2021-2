@@ -8,15 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
-
-
-// TODO: Удаление элементов при сортировке работает неправильно
-// TODO: Прикрутить к таблице с пользователями возможность награждать их
-
-
-
-
 namespace WinForms
 {
     public partial class MainForm : Form
@@ -91,11 +82,8 @@ namespace WinForms
                 // Обработать результат
                 if (result == DialogResult.OK)
                 {
-                    DataGridViewAndListManager.ManageList(
-                        persons, null, form.Person, DataGridViewAndListManager.ListAction.AddItem);
-
-                    DataGridViewAndListManager.ManageDataGridView(
-                        dgvPersons, persons, DataGridViewAndListManager.DataGridViewAction.AddRow);
+                    DataGridViewAndListManager.AddPerson(persons, form.Person);
+                    DataGridViewAndListManager.AddRow(dgvPersons, persons);
                 }
             }
         }
@@ -114,11 +102,8 @@ namespace WinForms
                 // Обработать результат
                 if (result == DialogResult.OK)
                 {
-                    DataGridViewAndListManager.ManageList(
-                        persons, null, form.Person, DataGridViewAndListManager.ListAction.UpdateItem, idx);
-
-                    DataGridViewAndListManager.ManageDataGridView(
-                        dgvPersons, persons, DataGridViewAndListManager.DataGridViewAction.UpdateRow, idx);
+                    DataGridViewAndListManager.CopyPerson(persons, form.Person, idx);
+                    DataGridViewAndListManager.UpdateRow(dgvPersons, persons, idx);
                 }
             }
         }
@@ -132,14 +117,10 @@ namespace WinForms
                 // Обработать результат
                 if (result == DialogResult.OK)
                 {
-                    int id = DataGridViewAndListManager.ManageDataGridView(
-                                dgvPersons, persons, DataGridViewAndListManager.DataGridViewAction.DeleteRow);
+                    int id = DataGridViewAndListManager.RemoveRow(dgvPersons);
 
-                    DataGridViewAndListManager.ManageList(
-                        persons, null, null, DataGridViewAndListManager.ListAction.DeleteItem, id);
-
-                    DataGridViewAndListManager.ManageDataGridView(
-                        dgvPersons, persons, DataGridViewAndListManager.DataGridViewAction.UpdateRowsIndexes, id);
+                    DataGridViewAndListManager.DeletePerson(persons, id);
+                    DataGridViewAndListManager.UpdateRowsIndexes(dgvPersons, persons, id);
                 }
             }
         }
@@ -154,11 +135,8 @@ namespace WinForms
                 // Обработать результат
                 if (result == DialogResult.OK)
                 {
-                    DataGridViewAndListManager.ManageList(
-                        rewards, form.Reward, DataGridViewAndListManager.ListAction.AddItem);
-
-                    DataGridViewAndListManager.ManageDataGridView(
-                        dgvRewards, rewards, DataGridViewAndListManager.DataGridViewAction.AddRow);
+                    DataGridViewAndListManager.AddReward(rewards, form.Reward);
+                    DataGridViewAndListManager.AddRow(dgvRewards, rewards);
                 }
             }
         }
@@ -169,6 +147,8 @@ namespace WinForms
             foreach (DataGridViewRow item in dgvRewards.SelectedRows)
                 idx = int.Parse(item.Cells[0].Value.ToString());
 
+            Reward oldReward = rewards[idx];
+
             using (var form = new AddRewardForm(AddRewardForm.FormTask.Edit, rewards[idx]))
             {
                 // Вывести форму
@@ -177,11 +157,11 @@ namespace WinForms
                 // Обработать результат
                 if (result == DialogResult.OK)
                 {
-                    DataGridViewAndListManager.ManageList(
-                        rewards, form.Reward, DataGridViewAndListManager.ListAction.UpdateItem, idx);
+                    DataGridViewAndListManager.CopyReward(rewards, form.Reward, idx);
+                    DataGridViewAndListManager.UpdatePersonRewardsOnEdit(persons, oldReward, form.Reward);
 
-                    DataGridViewAndListManager.ManageDataGridView(
-                        dgvRewards, rewards, DataGridViewAndListManager.DataGridViewAction.UpdateRow, idx);
+                    DataGridViewAndListManager.UpdateRow(dgvRewards, rewards, idx);
+                    DataGridViewAndListManager.UpdateRowsRewards(dgvPersons, persons);
                 }
             }
         }
@@ -195,24 +175,13 @@ namespace WinForms
                 // Обработать результат
                 if (result == DialogResult.OK)
                 {
-                    int id = DataGridViewAndListManager.ManageDataGridView(
-                                dgvRewards, rewards, DataGridViewAndListManager.DataGridViewAction.DeleteRow);
+                    int id = DataGridViewAndListManager.RemoveRow(dgvRewards);
 
-                    // Обновить списки наград пользователей
-                    DataGridViewAndListManager.ManageList(
-                        persons, rewards, null, DataGridViewAndListManager.ListAction.UpdateRewards, id);
+                    DataGridViewAndListManager.UpdatePersonRewardsOnRemove(persons, rewards, id);
+                    DataGridViewAndListManager.DeleteReward(rewards, id);
 
-                    // Обновить список наград
-                    DataGridViewAndListManager.ManageList(
-                        rewards, null, DataGridViewAndListManager.ListAction.DeleteItem, id);
-
-                    // Обновить индексы в таблице наград
-                    DataGridViewAndListManager.ManageDataGridView(
-                        dgvRewards, rewards, DataGridViewAndListManager.DataGridViewAction.UpdateRowsIndexes, id);
-
-                    // Обновить награды в таблице пользователей
-                    DataGridViewAndListManager.ManageDataGridView(
-                        dgvPersons, persons, DataGridViewAndListManager.DataGridViewAction.UpdateRowsRewards, id);
+                    DataGridViewAndListManager.UpdateRowsIndexes(dgvRewards, rewards, id);
+                    DataGridViewAndListManager.UpdateRowsRewards(dgvPersons, persons);
                 }
             }
         }
