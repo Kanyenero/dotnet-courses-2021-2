@@ -17,20 +17,6 @@ namespace Persons.DAL
 
         System.Collections.Generic.IEnumerable<Entities.Person> GetList();
         Entities.Person GetListItem(int idx);
-
-        void SortPersonsByIDAscOrder();
-        void SortPersonsByIDDescOrder();
-
-        void SortPersonsByNameAscOrder();
-        void SortPersonsByNameDescOrder();
-
-        void SortPersonsByLastNameAscOrder();
-        void SortPersonsByLastNameDescOrder();
-
-        void SortPersonsByBirthdateAscOrder();
-        void SortPersonsByBirthdateDescOrder();
-
-        void SortPersonsByAgeAscOrder();
-        void SortPersonsByAgeDescOrder();
+        void SetList(IEnumerable<Person> list);
     }
 }

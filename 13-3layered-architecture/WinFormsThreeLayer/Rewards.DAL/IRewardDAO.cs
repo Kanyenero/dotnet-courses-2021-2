@@ -16,14 +16,6 @@ namespace Rewards.DAL
 
         System.Collections.Generic.IEnumerable<Entities.Reward> GetList();
         Entities.Reward GetListItem(int idx);
-
-        void SortRewardsByIDAscOrder();
-        void SortRewardsByIDDescOrder();
-
-        void SortRewardsByTitleAscOrder();
-        void SortRewardsByTitleDescOrder();
-
-        void SortRewardsByDescriptionAscOrder();
-        void SortRewardsByDescriptionDescOrder();
+        void SetList(IEnumerable<Reward> list);
     }
 }

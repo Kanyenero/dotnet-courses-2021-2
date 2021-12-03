@@ -8,39 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Persons.BL;
+using PersonsAndRewards.BL;
 using Entities;
 
 namespace WinFormsThreeLayer
 {
     public partial class MainForm : Form
     {
-        private enum PersonSortMode { Ascending, Descending }
-        private PersonSortMode smode = PersonSortMode.Ascending;
+        private IPersonBL persons;
+        private IRewardBL rewards;
 
-        private readonly PersonBL persons;
-        private readonly RewardBL rewards;
-
-        public MainForm()
+        public MainForm(IPersonBL persons, IRewardBL rewards)
         {
             InitializeComponent();
 
             personsToolStripMenuItem.Enabled = true;
             rewardsToolStripMenuItem.Enabled = false;
 
-            persons = new PersonBL();
-            persons.InitList();
-
-            rewards = new RewardBL();
-            rewards.InitList();
-
-            // TEST >
-            persons.GetList().ToList()[0].Rewards = rewards.GetList().ToList();
-            persons.GetList().ToList()[1].Rewards = rewards.GetList().ToList();
-            persons.GetList().ToList()[2].Rewards = rewards.GetList().ToList();
-            persons.GetList().ToList()[3].Rewards = rewards.GetList().ToList();
-            persons.GetList().ToList()[4].Rewards = rewards.GetList().ToList();
-            // TEST <
+            this.persons = persons;
+            this.rewards = rewards;
 
             string[] dgvPersons_cols = Person.GetFieldsNames();
             string[] dgvRewards_cols = Reward.GetFieldsNames();
@@ -228,7 +214,7 @@ namespace WinFormsThreeLayer
             }
         }
 
-        private void DataGridViewUpdateSelectedRows(DataGridView dgv, PersonBL ps)
+        private void DataGridViewUpdateSelectedRows(DataGridView dgv, IPersonBL ps)
         {
             foreach (DataGridViewRow r in dgv.SelectedRows)
             {
@@ -238,7 +224,7 @@ namespace WinFormsThreeLayer
                 }
             }
         }
-        private void DataGridViewUpdateSelectedRows(DataGridView dgv, RewardBL rs)
+        private void DataGridViewUpdateSelectedRows(DataGridView dgv, IRewardBL rs)
         {
             foreach (DataGridViewRow r in dgv.SelectedRows)
             {
@@ -248,7 +234,7 @@ namespace WinFormsThreeLayer
                 }
             }
         }
-        private void DataGridViewUpdateRows(DataGridView dgv, PersonBL ps)
+        private void DataGridViewUpdateRows(DataGridView dgv, IPersonBL ps)
         {
             foreach (DataGridViewRow r in dgv.Rows)
             {
@@ -258,7 +244,7 @@ namespace WinFormsThreeLayer
                 }
             }
         }
-        private void DataGridViewUpdateRows(DataGridView dgv, RewardBL rs)
+        private void DataGridViewUpdateRows(DataGridView dgv, IRewardBL rs)
         {
             foreach (DataGridViewRow r in dgv.Rows)
             {
@@ -283,27 +269,27 @@ namespace WinFormsThreeLayer
             {
                 if (dgvPersons.SortedColumn.Index == 0)
                 {
-                    persons.SortPersonsByIDAscOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.ID ascending select s);
                 }
 
                 if (dgvPersons.SortedColumn.Index == 1)
                 {
-                    persons.SortPersonsByNameAscOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.Name ascending select s);
                 }
 
                 if (dgvPersons.SortedColumn.Index == 2)
                 {
-                    persons.SortPersonsByLastNameAscOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.LastName ascending select s);
                 }
 
                 if (dgvPersons.SortedColumn.Index == 3)
                 {
-                    persons.SortPersonsByBirthdateAscOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.Birthdate ascending select s);
                 }
 
                 if (dgvPersons.SortedColumn.Index == 4)
                 {
-                    persons.SortPersonsByAgeAscOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.Age ascending select s);
                 }
             }
 
@@ -311,27 +297,27 @@ namespace WinFormsThreeLayer
             {
                 if (dgvPersons.SortedColumn.Index == 0)
                 {
-                    persons.SortPersonsByIDDescOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.ID descending select s);
                 }
 
                 if (dgvPersons.SortedColumn.Index == 1)
                 {
-                    persons.SortPersonsByNameDescOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.Name descending select s);
                 }
 
                 if (dgvPersons.SortedColumn.Index == 2)
                 {
-                    persons.SortPersonsByLastNameDescOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.LastName descending select s);
                 }
 
                 if (dgvPersons.SortedColumn.Index == 3)
                 {
-                    persons.SortPersonsByBirthdateDescOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.Birthdate descending select s);
                 }
 
                 if (dgvPersons.SortedColumn.Index == 4)
                 {
-                    persons.SortPersonsByAgeDescOrder();
+                    persons.SetList(from s in persons.GetList() orderby s.Age descending select s);
                 }
             }
         }
@@ -341,17 +327,17 @@ namespace WinFormsThreeLayer
             {
                 if (dgvRewards.SortedColumn.Index == 0)
                 {
-                    rewards.SortRewardsByIDAscOrder();
+                    rewards.SetList(from s in rewards.GetList() orderby s.ID ascending select s);
                 }
 
                 if (dgvRewards.SortedColumn.Index == 1)
                 {
-                    rewards.SortRewardsByTitleAscOrder();
+                    rewards.SetList(from s in rewards.GetList() orderby s.Title ascending select s);
                 }
 
                 if (dgvRewards.SortedColumn.Index == 2)
                 {
-                    rewards.SortRewardsByDescriptionAscOrder();
+                    rewards.SetList(from s in rewards.GetList() orderby s.Description ascending select s);
                 }
             }
 
@@ -359,17 +345,17 @@ namespace WinFormsThreeLayer
             {
                 if (dgvRewards.SortedColumn.Index == 0)
                 {
-                    rewards.SortRewardsByIDDescOrder();
+                    rewards.SetList(from s in rewards.GetList() orderby s.ID descending select s);
                 }
 
                 if (dgvRewards.SortedColumn.Index == 1)
                 {
-                    rewards.SortRewardsByTitleDescOrder();
+                    rewards.SetList(from s in rewards.GetList() orderby s.Title descending select s);
                 }
 
                 if (dgvRewards.SortedColumn.Index == 2)
                 {
-                    rewards.SortRewardsByDescriptionDescOrder();
+                    rewards.SetList(from s in rewards.GetList() orderby s.Description descending select s);
                 }
             }
         }

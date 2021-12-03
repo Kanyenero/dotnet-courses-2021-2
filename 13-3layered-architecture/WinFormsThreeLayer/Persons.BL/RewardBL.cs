@@ -5,22 +5,15 @@ using System.Linq;
 using Entities;
 using Rewards.DAL;
 
-namespace Persons.BL
+namespace PersonsAndRewards.BL
 {
-    public class RewardBL
+    public class RewardBL : IRewardBL
     {
         private readonly IRewardDAO rewardsDAO;
 
-        public RewardBL()
+        public RewardBL(IRewardDAO rewardsDAO)
         {
-            rewardsDAO = new RewardDAO();
-        }
-        public RewardBL(RewardBL item) : this()
-        {
-            foreach (Reward r in item.GetList())
-            {
-                rewardsDAO.Add(r);
-            }
+            this.rewardsDAO = rewardsDAO;
         }
 
         public IEnumerable<Reward> InitList()
@@ -40,6 +33,11 @@ namespace Persons.BL
         public Reward GetListItem(int id)
         {
             return rewardsDAO.GetListItem(id);
+        }
+
+        public void SetList(IEnumerable<Reward> list)
+        {
+            rewardsDAO.SetList(list);
         }
 
         public void Add(string title, string description)
@@ -83,34 +81,6 @@ namespace Persons.BL
                 throw new ArgumentOutOfRangeException("id");
 
             rewardsDAO.Remove(id);
-        }
-
-
-        /* Сортировки */
-
-        public void SortRewardsByIDAscOrder()
-        {
-            rewardsDAO.SortRewardsByIDAscOrder();
-        }
-        public void SortRewardsByIDDescOrder()
-        {
-            rewardsDAO.SortRewardsByIDDescOrder();
-        }
-        public void SortRewardsByTitleAscOrder()
-        {
-            rewardsDAO.SortRewardsByTitleAscOrder();
-        }
-        public void SortRewardsByTitleDescOrder()
-        {
-            rewardsDAO.SortRewardsByTitleDescOrder();
-        }
-        public void SortRewardsByDescriptionAscOrder()
-        {
-            rewardsDAO.SortRewardsByDescriptionAscOrder();
-        }
-        public void SortRewardsByDescriptionDescOrder()
-        {
-            rewardsDAO.SortRewardsByDescriptionDescOrder();
         }
     }
 }

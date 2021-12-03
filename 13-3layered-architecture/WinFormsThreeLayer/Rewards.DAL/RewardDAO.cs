@@ -75,6 +75,13 @@ namespace Rewards.DAL
             return rewards[idx];
         }
 
+        public void SetList(IEnumerable<Reward> list)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+
+            rewards = new List<Reward>(list);
+        }
+
         public void CheckInput(Reward r)
         {
             if (r == null)
@@ -85,34 +92,6 @@ namespace Rewards.DAL
             {
                 throw new ArgumentException($"Reward '{nameof(r)}' doesn't exist");
             }
-        }
-
-
-        public void SortRewardsByIDAscOrder()
-        {
-            rewards = (from s in GetList() orderby s.ID ascending select s).ToList();
-        }
-        public void SortRewardsByIDDescOrder()
-        {
-            rewards = (from s in GetList() orderby s.ID descending select s).ToList();
-        }
-
-        public void SortRewardsByTitleAscOrder()
-        {
-            rewards = (from s in GetList() orderby s.Title ascending select s).ToList();
-        }
-        public void SortRewardsByTitleDescOrder()
-        {
-            rewards = (from s in GetList() orderby s.Title descending select s).ToList();
-        }
-
-        public void SortRewardsByDescriptionAscOrder()
-        {
-            rewards = (from s in GetList() orderby s.Description ascending select s).ToList();
-        }
-        public void SortRewardsByDescriptionDescOrder()
-        {
-            rewards = (from s in GetList() orderby s.Description descending select s).ToList();
         }
     }
 }

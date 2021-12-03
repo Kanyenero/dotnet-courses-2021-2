@@ -5,15 +5,15 @@ using System.Linq;
 using Entities;
 using Persons.DAL;
 
-namespace Persons.BL
+namespace PersonsAndRewards.BL
 {
-    public class PersonBL
+    public class PersonBL : IPersonBL
     {
         private readonly IPersonDAO personsDAO;
 
-        public PersonBL()
+        public PersonBL(IPersonDAO personsDAO)
         {
-            personsDAO = new PersonDAO();
+            this.personsDAO = personsDAO;
         }
 
         public IEnumerable<Person> InitList()
@@ -37,6 +37,11 @@ namespace Persons.BL
             return personsDAO.GetListItem(idx);
         }
 
+        public void SetList(IEnumerable<Person> list)
+        {
+            personsDAO.SetList(list);
+        }
+
         public void Add(string name, string lastname, string birthdate)
         {
             Person p = new Person(name, lastname, DateTime.ParseExact(birthdate, "dd/MM/yyyy", null));
@@ -58,7 +63,7 @@ namespace Persons.BL
             personsDAO.UpdateItem(onIndex, toCopy);
         }
 
-        public void UpdateRewards(Person p, RewardBL rs)
+        public void UpdateRewards(Person p, IRewardBL rs)
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
 
@@ -85,49 +90,6 @@ namespace Persons.BL
                 throw new ArgumentOutOfRangeException("id");
 
             personsDAO.Remove(id);
-        }
-
-        /* Сортировки */
-
-        public void SortPersonsByIDAscOrder()
-        {
-            personsDAO.SortPersonsByIDAscOrder();
-        }
-        public void SortPersonsByIDDescOrder()
-        {
-            personsDAO.SortPersonsByIDDescOrder();
-        }
-        public void SortPersonsByNameAscOrder()
-        {
-            personsDAO.SortPersonsByNameAscOrder();
-        }
-        public void SortPersonsByNameDescOrder()
-        {
-            personsDAO.SortPersonsByNameDescOrder();
-        }
-        public void SortPersonsByLastNameAscOrder()
-        {
-            personsDAO.SortPersonsByLastNameAscOrder();
-        }
-        public void SortPersonsByLastNameDescOrder()
-        {
-            personsDAO.SortPersonsByLastNameDescOrder();
-        }
-        public void SortPersonsByBirthdateAscOrder()
-        {
-            personsDAO.SortPersonsByBirthdateAscOrder();
-        }
-        public void SortPersonsByBirthdateDescOrder()
-        {
-            personsDAO.SortPersonsByBirthdateDescOrder();
-        }
-        public void SortPersonsByAgeAscOrder()
-        {
-            personsDAO.SortPersonsByAgeAscOrder();
-        }
-        public void SortPersonsByAgeDescOrder()
-        {
-            personsDAO.SortPersonsByAgeDescOrder();
         }
     }
 }

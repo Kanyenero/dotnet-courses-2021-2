@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 using System.Linq;
 using Entities;
-using Persons.BL;
+using PersonsAndRewards.BL;
 
 namespace WinFormsThreeLayer
 {
@@ -12,25 +12,27 @@ namespace WinFormsThreeLayer
     {
         public enum FormTask { Add, Edit }
 
-        public AddUserForm(FormTask task, Person person, RewardBL allAvailableRewards)
+        private Person person;
+        private readonly IRewardBL allAvailableRewards;
+
+        // Возвращает результирующее значение формы
+        public Person Person { get { return person; } }
+
+        private string bday_day;
+        private string bday_month;
+        private string bday_year;
+
+        public AddUserForm(FormTask task, Person person, IRewardBL allAvailableRewards)
         {
             InitializeComponent();
+
+            this.allAvailableRewards = allAvailableRewards;
 
             InitializeVariables(person, allAvailableRewards);
             InitializeUI(task);
         }
 
-        private Person person;
-        private RewardBL allAvailableRewards;
-
-        // Возвращает результирующее значение формы
-        public Person Person { get { return person; } }
-        
-        private string bday_day;
-        private string bday_month;
-        private string bday_year;
-
-        private void InitializeVariables(Person p, RewardBL rs)
+        private void InitializeVariables(Person p, IRewardBL rs)
         {
             if (p == null)
                 person = new Person();
@@ -40,8 +42,6 @@ namespace WinFormsThreeLayer
 
             if (rs == null)
                 throw new ArgumentNullException("Input value of type 'Reward' must not be null");
-            else
-                allAvailableRewards = new RewardBL(rs);
         }
         private void InitializeUI(FormTask task)
         {
@@ -79,7 +79,7 @@ namespace WinFormsThreeLayer
             textBoxBirthdateMonth.Text = p.Birthdate.Month.ToString();
             textBoxBirthdateYear.Text = p.Birthdate.Year.ToString();
         }
-        private void InitializeRewardTextBoxes(Person p, RewardBL rs)
+        private void InitializeRewardTextBoxes(Person p, IRewardBL rs)
         {
             // Добавить все имеющиеся награды у Person в правое меню
             foreach (Reward r in p.Rewards)

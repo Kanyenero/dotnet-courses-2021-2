@@ -97,6 +97,13 @@ namespace Persons.DAL
             return persons[idx];
         }
 
+        public void SetList(IEnumerable<Person> list)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+
+            persons = new List<Person>(list);
+        }
+
         public void CheckInput(Person p)
         {
             if (p == null)
@@ -107,54 +114,6 @@ namespace Persons.DAL
             {
                 throw new ArgumentException($"Person '{nameof(p)}' doesn't exist");
             }
-        }
-
-
-
-
-        public void SortPersonsByIDAscOrder()
-        {
-            persons = (from s in GetList() orderby s.ID ascending select s).ToList();
-        }
-        public void SortPersonsByIDDescOrder()
-        {
-            persons = (from s in GetList() orderby s.ID descending select s).ToList();
-        }
-
-        public void SortPersonsByNameAscOrder()
-        {
-            persons = (from s in GetList() orderby s.Name ascending select s).ToList();
-        }
-        public void SortPersonsByNameDescOrder()
-        {
-            persons = (from s in GetList() orderby s.Name descending select s).ToList();
-        }
-
-        public void SortPersonsByLastNameAscOrder()
-        {
-            persons = (from s in GetList() orderby s.LastName ascending select s).ToList();
-        }
-        public void SortPersonsByLastNameDescOrder()
-        {
-            persons = (from s in GetList() orderby s.LastName descending select s).ToList();
-        }
-
-        public void SortPersonsByBirthdateAscOrder()
-        {
-            persons = (from s in GetList() orderby s.Birthdate ascending select s).ToList();
-        }
-        public void SortPersonsByBirthdateDescOrder()
-        {
-            persons = (from s in GetList() orderby s.Birthdate descending select s).ToList();
-        }
-
-        public void SortPersonsByAgeAscOrder()
-        {
-            persons = (from s in GetList() orderby s.Age ascending select s).ToList();
-        }
-        public void SortPersonsByAgeDescOrder()
-        {
-            persons = (from s in GetList() orderby s.Age descending select s).ToList();
         }
     }
 }

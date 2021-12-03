@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsThreeLayer", "WinFormsThreeLayer\WinFormsThreeLayer.csproj", "{5DD2D86F-D73F-48BE-AF14-6A34E599FC23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsThreeLayer", "WinFormsThreeLayer\WinFormsThreeLayer.csproj", "{5DD2D86F-D73F-48BE-AF14-6A34E599FC23}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BLL", "BLL", "{86D2EBD8-6B58-49D0-940D-730D72A972B8}"
 EndProject
@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{9CEC0290-17F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{CA8A4206-204C-4580-8D00-B75A6F9DEC80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{6CF22FE5-9D2B-4E9D-939A-2C36B79B13D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{6CF22FE5-9D2B-4E9D-939A-2C36B79B13D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persons.DAL", "Persons.DAL\Persons.DAL.csproj", "{201E040B-C94E-4505-B15B-30AABECCF380}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persons.DAL", "Persons.DAL\Persons.DAL.csproj", "{201E040B-C94E-4505-B15B-30AABECCF380}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persons.BL", "Persons.BL\Persons.BL.csproj", "{96527063-0C8E-422A-8488-D0A23B367087}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonsAndRewards.BL", "Persons.BL\PersonsAndRewards.BL.csproj", "{96527063-0C8E-422A-8488-D0A23B367087}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rewards.DAL", "Rewards.DAL\Rewards.DAL.csproj", "{4D1A6A14-EA0A-4988-B14A-BDEF8B32E0B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rewards.DAL", "Rewards.DAL\Rewards.DAL.csproj", "{4D1A6A14-EA0A-4988-B14A-BDEF8B32E0B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
