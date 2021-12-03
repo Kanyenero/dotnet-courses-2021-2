@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Awards.BL.Collections\Awards.BL.csproj" />
+    <ProjectReference Include="..\Entities\Entities.csproj" />
+    <ProjectReference Include="..\Persons.BL.Collections\Persons.BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AddUserFormUsingCollections.cs">
+      <DependentUpon>AddPersonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="AddUserFormUsingSql.cs">
+      <DependentUpon>AddPersonForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
