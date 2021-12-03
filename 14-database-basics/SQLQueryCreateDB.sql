@@ -47,8 +47,8 @@ create table Relations
 	[ID]			int				NOT NULL	primary key identity(1,1),
 	[Person_ID]		int				NOT NULL,
 	[Award_ID]		int				NOT NULL,
-	FOREIGN KEY ([Person_ID]) REFERENCES [Persons](ID) ON delete CASCADE,
-	FOREIGN KEY ([Award_ID]) REFERENCES [Awards](ID) ON delete CASCADE
+	--FOREIGN KEY ([Person_ID]) REFERENCES [Persons](ID) ON delete CASCADE,
+	--FOREIGN KEY ([Award_ID]) REFERENCES [Awards](ID) ON delete CASCADE
 )
 
 insert into [Relations] values (1,1), (1,3), (2,2);
@@ -73,14 +73,14 @@ create type AwardsIDs as table(ID int);
 --
 GO
 create procedure AwardAdd(@title nvarchar(50), @description nvarchar(250)) as
-	insert into [Awards] values(@title, @description);
+	if not exists(select * from [Awards] where Title = @title AND Descr = @description)
+		insert into [Awards] 
+		output Inserted.ID 
+		values(@title, @description);
 
 GO
 create procedure AwardRemove(@awardID int) as
 begin
-	-- При удалении награды из таблицы наград
-	-- производится обновление таблицы зависимостей
-
 	delete from [Relations] where Award_ID = @awardID;
 	delete from [Awards] where ID = @awardID;
 end
@@ -93,15 +93,11 @@ create procedure AwardSetData(@awardID int, @new_title nvarchar(50), @new_descr 
 
 GO
 create procedure AwardGetAll as 
-	return select * from [Awards];
+	select ID, Title, Descr from [Awards];
 
 GO
 create procedure AwardGetByID(@awardID int) as
-	return select * from [Awards] where ID = @awardID;
-
-GO
-create procedure AwardGetIDByName(@title nvarchar(50)) as
-	return select ID from [Awards] where Title = @title;
+	select ID, Title, Descr from [Awards] where ID = @awardID;
 
 
 
@@ -110,21 +106,16 @@ create procedure AwardGetIDByName(@title nvarchar(50)) as
 --
 GO
 create procedure PersonAdd(@name nvarchar(50), @lastname nvarchar(50), @birthdate date) as
-	insert into [Persons] values(@name, @lastname, @birthdate);
+		insert into [Persons] 
+		output Inserted.ID 
+		values(@name, @lastname, @birthdate);
 
---GO 
---alter procedure PersonAdd(@name nvarchar(50), @lastname nvarchar(50), @birthdate date, 
---						  @awardIDs as [Awards]IDs readonly) as
---begin
---
---	declare @personIDs as table(id int);
---
---	insert into [Persons] output inserted.ID into @personIDs values(@name, @lastname, @birthdate);
---	insert into [Relations] select [@personIDs].ID, [@awardIDs].ID from @awardIDs, @personIDs;
---end
-
-
--- Объединить в один запрос!
+GO
+create procedure PersonRemove(@personID int) as
+begin
+	delete from [Relations] where Person_ID = @personID;
+	delete from [Persons] where ID = @personID;
+end
 
 GO
 create procedure PersonSetData(
@@ -141,45 +132,30 @@ create procedure PersonSetAward(@personID int, @awardID int) as
 begin
 
 	-- Если взаимосвязь не существует, добавить её
-	if not exists(select 1 from [Relations] where Person_ID = @personID AND Award_ID = @awardID)
+	if not exists(select * from [Relations] where Person_ID = @personID AND Award_ID = @awardID)
 		insert into [Relations] values (@personID, @awardID);
 
 end
 
 GO
-create procedure PersonAddAwards(@personID int, @awardIDs as AwardsIDs readonly) as
-	insert into [Relations] select @personID, ID FROM @awardIDs;
-
-GO
 create procedure PersonRemoveAward(@personID int, @awardID int) as
-begin
-
-	-- Если взаимосвязь существует, удалить её
-	if exists(select 1 from [Relations] where Person_ID = @personID AND Award_ID = @awardID)
-		delete from [Relations] where Person_ID = @personID AND Award_ID = @awardID;
-
-end
+	delete from [Relations] where Person_ID = @personID AND Award_ID = @awardID;
 
 GO
-create procedure PersonRemove(@personID int) as
-begin
-	-- При удалении персоны из таблицы персон
-	-- производится обновление таблицы зависимостей
-
+create procedure PersonResetAwards(@personID int) as
 	delete from [Relations] where Person_ID = @personID;
-	delete from [Persons] where ID = @personID;
-end
 
 GO
 create procedure PersonGetAll as 
-	return select * from [Persons];
+	select ID, Name, LastName, Birthdate from [Persons];
 
 GO
 create procedure PersonGetByID(@personID int) as
-	return select * from [Persons] where ID = @personID;
+	select ID, Name, LastName, Birthdate from [Persons] where ID = @personID;
 
 GO
 create procedure PersonGetAwards(@personID int) as
-	select * from [Awards] inner join [Relations] 
-		on [Awards].ID = [Relations].Award_ID 
-		where Person_ID = @personID;
+	select [Awards].ID, Title, Descr 
+	from [Awards] inner join [Relations] 
+	on [Awards].ID = [Relations].Award_ID 
+	where Person_ID = @personID;
