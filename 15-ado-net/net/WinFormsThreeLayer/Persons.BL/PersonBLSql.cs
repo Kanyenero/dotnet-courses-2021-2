@@ -3,69 +3,100 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Entities;
-using Persons.DAL.SQL;
+using Persons.DAL;
 
-namespace Persons.BL.SQL
+namespace Persons.BL
 {
-    public class PersonBLSql
+    public class PersonBLSql : IPersonBL
     {
-        private readonly IPersonDAOSql personDAOSql;
+        private readonly IPersonDAO personsDAO;
 
-        public PersonBLSql(string connection)
+
+        public PersonBLSql(IPersonDAO personsDAO)
         {
-            personDAOSql = new PersonDAOSql(connection);
+            this.personsDAO = personsDAO;
         }
 
-        public void InitDB()
+
+        public IEnumerable<Person> InitList()
         {
             Add("Ilya", "Varlamov", "1984/01/07");
             Add("Max", "Katz", "1984/12/23");
             Add("Darya", "Besedina", "1988/07/22");
             Add("Leonid", "Volkov", "1980/11/10");
             Add("Kira", "Yarmish", "1989/10/11");
-        }
 
-        public int Add(string name, string lastname, string birthdate)
-        {
-            Person item = new Person(name, lastname, DateTime.ParseExact(birthdate, "yyyy/MM/dd", null));
-
-            return personDAOSql.Add(item);
-        }
-
-        public void Remove(int itemID)
-        {
-            personDAOSql.Remove(itemID);
-        }
-
-        public void SetName(int itemID, string newValue)
-        {
-            personDAOSql.SetName(itemID, newValue);
-        }
-        public void SetLastName(int itemID, string newValue)
-        {
-            personDAOSql.SetLastName(itemID, newValue);
-        }
-        public void SetBirthdate(int itemID, string newValue)
-        {
-            personDAOSql.SetBirthdate(itemID, newValue);
-        }
-
-        public void AddAward(int personID, int awardID)
-        {
-            personDAOSql.AddAward(personID, awardID);
-        }
-        public void RemoveAward(int personID, int awardID)
-        {
-            personDAOSql.RemoveAward(personID, awardID);
+            return GetList();
         }
 
         public IEnumerable<Person> GetList()
         {
-            return personDAOSql.GetList();
+            return personsDAO.GetList();
         }
-        public Person GetListItem(int itemID)
+        public Person GetListItem(int id)
         {
-            return personDAOSql.GetListItem(itemID);
+            return personsDAO.GetListItem(id);
+        }
+
+        public int Add(string name, string lastname, string birthdate)
+        {
+            Person p = new Person(name, lastname, DateTime.ParseExact(birthdate, "yyyy/MM/dd", null));
+
+            return Add(p);
+        }
+        public int Add(Person p)
+        {
+            if (p == null) throw new ArgumentNullException(nameof(p));
+
+            return personsDAO.Add(p);
+        }
+
+        public void Remove(Person p)
+        {
+            if (p == null) throw new ArgumentNullException(nameof(p));
+
+            personsDAO.Remove(p);
+        }
+        public void Remove(int id)
+        {
+            personsDAO.Remove(id);
+        }
+
+        public void SetData(int personID, string[] data)
+        {
+            personsDAO.SetData(personID, data);
+        }
+
+        public void AddAward(Person person, Award award)
+        {
+            personsDAO.AddAward(person, award);
+        }
+        public void AddAward(int personID, Award award)
+        {
+            personsDAO.AddAward(personID, award);
+        }
+
+        public void RemoveAward(Person person, Award award)
+        {
+            personsDAO.RemoveAward(person, award);
+        }
+        public void RemoveAward(int personID, int awardID)
+        {
+            personsDAO.RemoveAward(personID, awardID);
+        }
+
+        public void GetAwards(List<Person> persons)
+        {
+            personsDAO.GetAwards(persons);
+        }
+        public void GetAwards(Person person)
+        {
+            personsDAO.GetAwards(person);
+        }
+
+        public void ResetAwards(int personID)
+        {
+            personsDAO.ResetAwards(personID);
         }
     }
 }
