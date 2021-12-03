@@ -2,7 +2,7 @@
 
 namespace Task_2
 {
-    public class Employee : User, IEquatable <Employee>
+    public class Employee : User, IEquatable<Employee>
     {
         private static int _employeeID;
         private readonly DateTime _enrollmentDate;
@@ -71,7 +71,7 @@ namespace Task_2
 
             var tmp = obj as Employee;
 
-            return base.Equals(tmp);
+            return Equals(tmp);
         }
     }
 }

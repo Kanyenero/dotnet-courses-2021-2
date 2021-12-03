@@ -60,11 +60,16 @@ namespace NetBasicsDemo
 
 		public override int GetHashCode()
 		{
-			int hashBase = 13;
-			hashBase = (hashBase * 7) + x;
-			hashBase = (hashBase * 7) + y;
+			//return HashCode.Combine(x, y);
+			// !
 
-			return hashBase;
+
+
+			//int hashBase = 13;
+			//hashBase = (hashBase * 7) + x;
+			//hashBase = (hashBase * 7) + y;
+
+			//return hashBase;
 		}
 	}
 }
