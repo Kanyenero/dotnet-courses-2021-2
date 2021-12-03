@@ -83,7 +83,7 @@ namespace Task_2
             }
             else
             {
-                fsw.Changed += new FileSystemEventHandler(fsw_OnFileChanged);
+                fsw.Changed += fsw_OnFileChanged;
                 fsw.Created += new FileSystemEventHandler(fsw_OnFileCreated);
                 fsw.Deleted += new FileSystemEventHandler(fsw_OnFileDeleted);
                 fsw.Renamed += new RenamedEventHandler(fsw_OnFileRenamed);

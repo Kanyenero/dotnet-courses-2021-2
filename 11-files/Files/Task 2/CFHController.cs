@@ -35,12 +35,6 @@ namespace Task_2
         private FileSystemWatcher txtWatcher;
         private FileSystemWatcher dirWatcher;
 
-        // Этот словарь хранит пары <ключ, значение>
-        // для файлов, помещаемых в хранилище
-        // Ключ - время какой-либо операции над файлом
-        // Значение - уникальное имя файла в хранилище
-        Dictionary <DateTime, string> logList;
-
         // Время, вводимое пользователем, на которое
         // будет производиться откат
         DateTime userBackupTime;
@@ -63,8 +57,6 @@ namespace Task_2
                 Path.GetFullPath( Path.Combine( Path.Combine( BaseDirectoryPath, @"..\" ), storageName) ) );
 
             if (!storageDirectory.Exists) storageDirectory.Create();
-
-            logList = new Dictionary <DateTime, string>();
 
             Console.WriteLine(CFHControllerTitle());
         }

@@ -34,6 +34,9 @@ namespace Task_1
 
             using (FileStream fs = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.None))
             {
+                // ReadAllLines !
+
+
                 // в общем случае некорректно, буфер служит для чтения данных порциями
                 byte[] buffer = new byte[fs.Length];
 
