@@ -1,0 +1,46 @@
+﻿@using TestMvc2.Models;
+
+@model UserViewModel
+
+@{
+    ViewBag.Title = "Index";
+    var currentUser = Model;
+    if (currentUser == null)
+    {
+        currentUser = new UserViewModel();
+    }
+}
+
+<h2>Details</h2>
+
+<form action="Save" method="post">
+    <input name="Id" style="display: none;" value="@currentUser.Id" />
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input name="FirstName" type="text" class="form-control" id="firstName" value="@currentUser.FirstName"/>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input name="LastName" type="text" class="form-control" id="lastName" value="@currentUser.LastName" />
+    </div>
+    <div class="form-group">
+        <label for="birthdate">Birthdate</label>
+        <input name="Birthdate" type="date" class="form-control" id="birthdate" value="@currentUser.Birthdate.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="form-group">
+        <p>Rewards</p>
+        @for (var i = 0; i < currentUser.AvailableRewards.Count; i++)
+        {
+            var r = Model.AvailableRewards[i];
+            <label>@r.Title</label>
+            <input type="number" name="AvailableRewards[@i].Id" style="display: none;" value="@r.Id"/>
+            @Html.EditorFor(m => m.AvailableRewards[i].Checked)
+        <br/>
+        }
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Save</button>
+        @Html.ActionLink("Cancel", "Index", "User", new { }, new { @class = "btn btn-warning" })
+    </div>
+</form>

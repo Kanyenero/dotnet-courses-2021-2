@@ -1,0 +1,43 @@
+﻿html {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+.container h1, .container h2 {
+    color: blue;
+}
+
+.navbar-nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    padding-right: 10px;
+}
+
+.nav-link {
+    text-decoration: none;
+}
+
+.navbar-table_actions-nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-table_actions-nav {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.nav-item {
+    display: inline;
+}
+
+button {
+    height: 35px;
+    width: 120px;
+    font-size: 14px;
+}

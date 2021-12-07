@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Remove selected item";
+    string type = ViewData["type"] as string;
+    int id = Convert.ToInt32(ViewData["id"]);
+}
+
+<div class="container">
+
+    <h2>Remove selected item?</h2>
+
+    <button class="button-submit"
+            onclick="location.href='@Url.Action("RemoveConfirmed", "Home", new {type = type, id=id}, null)'">
+        Submit Changes
+    </button>
+
+</div>
+

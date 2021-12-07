@@ -1,0 +1,40 @@
+﻿.table {
+    font-size: 18px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.table th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+.table_header-operation {
+    width: 130px;
+}
+
+.table_header-id {
+    width: 30px;
+}
+
+.table-link {
+    text-decoration: none;
+}
+
+.table tr:nth-child(even) {
+    background-color: rgb(235, 232, 232);
+}
+
+.table tr:hover {
+    background-color: lightblue;
+}
+
+a { color: blue; } /* Unvisited link  */
+a:visited { color: blue; } /* Visited link    */
+a:hover { color: #04AA6D; } /* Mouse over link */
+a:active { color: green; } /* Selected link   */

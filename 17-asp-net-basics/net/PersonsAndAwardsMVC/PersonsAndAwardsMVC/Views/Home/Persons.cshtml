@@ -1,0 +1,64 @@
+﻿@model IEnumerable<PersonViewModel>
+
+@{
+    ViewData["Title"] = "Persons";
+}
+
+<div class="container">
+    <nav class="navbar-table_actions">
+        <ul class="navbar-table_actions-nav">
+            <li class="nav-item">
+                <a class="nav-link" 
+                   asp-area="" 
+                   asp-controller="Home" 
+                   asp-action="PersonForm"
+                   asp-route-task="add"
+                   asp-route-id="">Add New Person</a>
+            </li>
+        </ul>
+
+        <hr>
+    </nav>
+
+    <table class="table">
+        <tr class="table-header">
+            <th class="table_header-operation">Operation</th>
+            <th class="table_header-id">ID</th>
+            <th class="table_header-name">Name</th>
+            <th class="table_header-lastname">LastName</th>
+            <th class="table_header-birthdate">Birthdate</th>
+            <th class="table_header-age">Age</th>
+            <th class="table_header-awards">Awards</th>
+        </tr>
+
+       @foreach (var person in Model)
+        {
+            <tr id="@person.ID">
+                <td class="table_header-operation">
+                    <a class="table-link" 
+                       asp-controller="Home" 
+                       asp-action="PersonForm"
+                       asp-route-task="edit"
+                       asp-route-id="@person.ID">
+                       Edit
+                    </a> |
+                    <a class="table-link" 
+                       asp-controller="Home" 
+                       asp-action="RemoveConfirmationForm"
+                       asp-route-type="person"
+                       asp-route-id="@person.ID">
+                       Remove
+                    </a>
+                </td>
+                <td class="table_header-id">@person.ID</td>
+                <td class="table_header-name">@person.Name</td>
+                <td class="table_header-lastname">@person.LastName</td>
+                <td class="table_header-birthdate">@person.Birthdate</td>
+                <td class="table_header-age">@person.Age</td>
+                <td class="table_header-awards">
+                    @person.GetAwards()
+                </td>
+            </tr>
+        }
+    </table>
+</div>

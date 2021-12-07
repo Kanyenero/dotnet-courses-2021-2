@@ -1,0 +1,21 @@
+.inputs-table_inner {
+    border-collapse: collapse;
+}
+
+.inputs-table_inner tr {
+    width: 100%;
+}
+
+.inputs-table_inner tr td {
+    padding: 1px;
+    position: relative;
+}
+
+select {
+    background-color: white;
+    width: 150px;
+}
+
+.confirm_buttons {
+    padding-top: 5px;
+}

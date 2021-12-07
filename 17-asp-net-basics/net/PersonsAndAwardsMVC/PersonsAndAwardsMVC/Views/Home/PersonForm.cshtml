@@ -1,0 +1,131 @@
+﻿@model PersonsAndAwardsMVC.Models.PersonViewModel
+@{
+    ViewData["Title"] = "Add/Edit Person";
+    IEnumerable<Entities.Award> allAvailableAwards = ViewData["AllAvailableAwards"] as IEnumerable<Entities.Award>;
+    string task = ViewData["task"] as string;
+}
+
+@using (Html.BeginForm("PersonForm", "Home", new { task = task }, FormMethod.Post))
+{
+    @*@Html.ValidationSummary(true)*@
+
+<div class="container">
+
+    @if (task == "add")
+    {
+        <h2>Add New Person</h2>
+    }
+    @if (task == "edit")
+    {
+        <h2>Edit Selected Person</h2>
+    }
+
+    <table class="inputs-table">
+        <tr>
+            <td><label for="Name">Name:</label></td>
+            <td>
+                <input type="text"
+                       name="Name"
+                       id="Name"
+                       maxlength="50"
+                       size="43"
+                       value="@Model.Name">
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="LastName">LastName:</label></td>
+            <td>
+                <input type="text"
+                       name="LastName"
+                       id="LastName"
+                       maxlength="50"
+                       size="43"
+                       value="@Model.LastName">
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="Birthdate">Birthdate:</label></td>
+            <td>
+                <input type="date"
+                       name="Birthdate"
+                       id="Birthdate"
+                       min="@DateTime.Now.AddYears(-150).ToString("yyyy-MM-dd")"
+                       max="@DateTime.Now.ToString("yyyy-MM-dd")"
+                       value="@Model.Birthdate.ToString("yyyy-MM-dd")"
+                       style="width: 320px;">
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="allAvailableAwards">Awards:</label></td>
+            <td>
+                <table class="inputs-table_inner">
+                    <tr>
+                        <td rowspan="2">
+                            <select name="allAvailableAwards"
+                                    id="allAvailableAwards"
+                                    size="5"
+                                    multiple>
+                                    @foreach (var award in allAvailableAwards)
+                                    {
+                                        if (!Model.Awards.Contains(award)) { <option value="@award.ID">@award.Title</option> }
+                                    }
+                            </select>
+                        </td>
+
+                        <td><input type="button" name="removeAward" id="removeAward" value="<"></td>
+
+                        <td rowspan="2">
+                            <select name="choosedAwards"
+                                    id="choosedAwards"
+                                    size="5"
+                                    multiple>
+                                    @foreach (var award in Model.Awards)
+                                    {
+                                        <option value="@award.ID" selected>@award.Title</option>
+                                    }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" name="addAward" id="addAward" value=">"/>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <input type="submit" name="submit" id="submit" value="Confirm" />
+
+</div>
+}
+
+<script>
+    $(document).ready(function ()
+    {
+        $('#submit').click(function ()
+        {
+            $('#choosedAwards option').prop('selected', true);
+        });
+
+        $('#addAward').click(function ()
+        {
+            var itemID = parseInt($('#allAvailableAwards option:selected').val());
+            $('#allAvailableAwards option:selected').remove().appendTo('#choosedAwards');
+
+            console.log("Added award with ID: " + itemID);
+        });
+
+        $('#removeAward').click(function ()
+        {
+            var itemID = parseInt($('#choosedAwards option:selected').val());
+            $('#choosedAwards option:selected').remove().appendTo('#allAvailableAwards');
+
+            console.log("Removed award with ID: " + itemID);
+        });
+    });
+</script>

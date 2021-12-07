@@ -1,0 +1,15 @@
+﻿.table_header-name {
+    width: 150px;
+}
+
+.table_header-lastname {
+    width: 150px;
+}
+
+.table_header-birthdate {
+    width: 180px;
+}
+
+.table_header-age {
+    width: 30px;
+}

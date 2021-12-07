@@ -1,0 +1,56 @@
+﻿@model IEnumerable<AwardViewModel>
+
+@{
+    ViewData["Title"] = "Awards";
+}
+
+<div class="container">
+    <nav class="navbar-table_actions">
+        <ul class="navbar-table_actions-nav">
+            <li class="nav-item">
+                <a class="nav-link" 
+                   asp-area="" 
+                   asp-controller="Home" 
+                   asp-action="AwardForm"
+                   asp-route-task="add"
+                   asp-route-id="">Add New Award</a>
+            </li>
+        </ul>
+
+        <hr>
+    </nav>
+
+    <table class="table">
+        <tr class="table-header">
+            <th class="table_header-operation">Operation</th>
+            <th class="table_header-id">ID</th>
+            <th class="table_header-title">Title</th>
+            <th class="table_header-description">Description</th>
+        </tr>
+
+        @foreach (var award in Model)
+        {
+            <tr>
+                <td class="table_header-operation">
+                    <a class="table-link"
+                       asp-controller="Home"
+                       asp-action="AwardForm"
+                       asp-route-task="edit"
+                       asp-route-id="@award.ID">
+                       Edit
+                    </a> |
+                    <a class="table-link"
+                       asp-controller="Home"
+                       asp-action="RemoveConfirmationForm"
+                       asp-route-type="award"
+                       asp-route-id="@award.ID">
+                       Remove
+                    </a>
+                </td>
+                <td class="table_header-id">@award.ID</td>
+                <td class="table_header-title">@award.Title</td>
+                <td class="table_header-description">@award.Description</td>
+            </tr>
+        }
+    </table>
+</div>

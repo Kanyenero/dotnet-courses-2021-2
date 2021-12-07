@@ -1,0 +1,23 @@
+﻿.inputs-table {
+    font-size: 16px;
+    border: 2px solid green;
+    border-collapse: collapse;
+    background-color: #04AA6D;
+    color: white;
+}
+
+.inputs-table td {
+    text-align: right;
+    vertical-align: top;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+.confirm_buttons {
+    padding-top: 5px;
+}
