@@ -1,0 +1,49 @@
+html{
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.header-header h1 {
+    color: blue;
+}
+
+.header-controls a {
+    text-decoration: none;
+    padding-right: 20px;
+    text-align: left;
+}
+
+.table {
+    font-size: 14px;
+    border: 2px solid green;
+    border-collapse: collapse;
+    background-color: #04AA6D;
+    color: white;
+    text-align: left;
+}
+
+.table td {
+    vertical-align: top;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.table-awards-table {
+    border-collapse: collapse;
+}
+
+.table-awards-table tr {
+    width: 100%;
+}
+
+.table-awards-table tr td {
+    text-align: left;
+    padding: 1px;
+    position: relative;
+}
+
+select {
+    background-color: white;
+    width: 150px;
+}
+

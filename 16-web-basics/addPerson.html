@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Add or Edit Award</title>
+
+        <link rel="stylesheet" href="css/styles addPerson.css">
+
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    </head>
+
+    <body>
+        
+        <div class="header">
+
+            <div class="header-header">
+                <h1>Add or Edit Person</h1>
+            </div>
+
+            <hr>
+        </div>
+
+        <form name="inputs" action="">
+
+            <table class="table">
+
+                <tr class="table-name">
+                    <td><label class="label-name" for="input-name">Name:</label></td>
+                    <td><p><input type="text" name="input-name" id="input-name" maxlength="50" size="31"></p></td>
+                </tr>
+
+                <tr class="table-lastname">
+                    <td><p class="label-lastname">LastName:</p></td>
+                    <td><p><input type="text" name="input-lastname" id="1" maxlength="50" size="31"></p></td>
+                </tr>
+
+                <tr class="table-birthdate">
+                    <td><p class="label-birthdate">Birthdate:</p></td>
+                    <td><p><input type="datetime-local" name="input-birthdate" style="width: 238px;"></p></td>
+                </tr>
+
+                <tr class="table-awards">
+
+                    <td><p class="label-awards">Awards:</p></td>
+
+                    <td>
+                        <table class="table-awards-table">
+                            <tr>
+                                <td rowspan="2">
+                                    <select name="allAvailableAwards" id="" size="5">
+                                        <option value="friendliestNeighbor">Friendliest Neighbor</option>
+                                        <option value="I am Iron Man">I am Iron Man</option>
+                                    </select>
+                                </td>
+
+                                <td><input type="button" name="buttonRemoveAward" value="<"></td>
+                                
+                                <td rowspan="2">
+                                    <select name="personAwards" id="" size="5">
+                                        <option value="I am Iron Man">I am Iron Man</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="button" name="buttonAddAward" value=">"></td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+
+            </table>
+            
+            <hr>
+        </form>
+
+        <div class="confirm_buttons">
+
+            <input type="button" name="button-confirm" value="Confirm">
+            <input type="button" name="button-cancel" value="Cancel">
+
+        </div>
+
+    </body>
+
+
+</html>
