@@ -1,60 +1,43 @@
-﻿@model PersonsAndAwardsMVC.Models.PersonViewModel
+﻿@model PersonsAndAwardsMVC.Models.PersonAndAwardsViewModel
+
 @{
     ViewData["Title"] = "Add/Edit Person";
-    IEnumerable<Entities.Award> allAvailableAwards = ViewData["AllAvailableAwards"] as IEnumerable<Entities.Award>;
-    string task = ViewData["task"] as string;
 }
 
-@using (Html.BeginForm("PersonForm", "Home", new { task = task }, FormMethod.Post))
+@using (Html.BeginForm("AddPersonForm", "Persons", FormMethod.Post))
 {
-    @*@Html.ValidationSummary(true)*@
+    @Html.ValidationSummary(true)
 
 <div class="container">
 
-    @if (task == "add")
-    {
-        <h2>Add New Person</h2>
-    }
-    @if (task == "edit")
-    {
-        <h2>Edit Selected Person</h2>
-    }
+    <h2>Add New Person</h2>
 
     <table class="inputs-table">
         <tr>
             <td><label for="Name">Name:</label></td>
             <td>
-                <input type="text"
-                       name="Name"
-                       id="Name"
-                       maxlength="50"
-                       size="43"
-                       value="@Model.Name">
+                <input asp-for="person.Name" type="text" 
+                        size="43" 
+                        placeholder="Max: 50 symbols"/>
+                <span asp-validation-for="person.Name"></span>
             </td>
         </tr>
 
         <tr>
             <td><label for="LastName">LastName:</label></td>
             <td>
-                <input type="text"
-                       name="LastName"
-                       id="LastName"
-                       maxlength="50"
-                       size="43"
-                       value="@Model.LastName">
+                <input asp-for="person.LastName" type="text"
+                        size="43" 
+                        placeholder="Max: 50 symbols"/>
+                <span asp-validation-for="person.LastName"></span>
             </td>
         </tr>
 
         <tr>
             <td><label for="Birthdate">Birthdate:</label></td>
             <td>
-                <input type="date"
-                       name="Birthdate"
-                       id="Birthdate"
-                       min="@DateTime.Now.AddYears(-150).ToString("yyyy-MM-dd")"
-                       max="@DateTime.Now.ToString("yyyy-MM-dd")"
-                       value="@Model.Birthdate.ToString("yyyy-MM-dd")"
-                       style="width: 320px;">
+                <input asp-for="person.Birthdate" type="date" style="width: 320px;" />
+                <span asp-validation-for="person.Birthdate"></span>
             </td>
         </tr>
 
@@ -68,9 +51,9 @@
                                     id="allAvailableAwards"
                                     size="5"
                                     multiple>
-                                    @foreach (var award in allAvailableAwards)
+                                    @foreach (var award in Model.allAvailableAwards)
                                     {
-                                        if (!Model.Awards.Contains(award)) { <option value="@award.ID">@award.Title</option> }
+                                        if (!Model.person.Awards.Contains(award)) { <option value="@award.ID">@award.Title</option> }
                                     }
                             </select>
                         </td>
@@ -82,7 +65,7 @@
                                     id="choosedAwards"
                                     size="5"
                                     multiple>
-                                    @foreach (var award in Model.Awards)
+                                    @foreach (var award in Model.person.Awards)
                                     {
                                         <option value="@award.ID" selected>@award.Title</option>
                                     }
@@ -91,7 +74,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="button" name="addAward" id="addAward" value=">"/>
+                            <input type="button" name="addAward" id="addAward" value=">" />
                         </td>
                     </tr>
                 </table>
@@ -105,23 +88,19 @@
 }
 
 <script>
-    $(document).ready(function ()
-    {
-        $('#submit').click(function ()
-        {
+    $(document).ready(function () {
+        $('#submit').click(function () {
             $('#choosedAwards option').prop('selected', true);
         });
 
-        $('#addAward').click(function ()
-        {
+        $('#addAward').click(function () {
             var itemID = parseInt($('#allAvailableAwards option:selected').val());
             $('#allAvailableAwards option:selected').remove().appendTo('#choosedAwards');
 
             console.log("Added award with ID: " + itemID);
         });
 
-        $('#removeAward').click(function ()
-        {
+        $('#removeAward').click(function () {
             var itemID = parseInt($('#choosedAwards option:selected').val());
             $('#choosedAwards option:selected').remove().appendTo('#allAvailableAwards');
 

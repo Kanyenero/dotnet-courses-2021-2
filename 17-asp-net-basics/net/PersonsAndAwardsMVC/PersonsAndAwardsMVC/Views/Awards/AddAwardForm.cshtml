@@ -1,0 +1,42 @@
+﻿@model Entities.Award
+
+@{
+    ViewData["Title"] = "Add/Edit Award";
+}
+
+@using (Html.BeginForm("AddAwardForm", "Awards", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+<div class="container">
+
+    <h2>Add New Award</h2>
+
+    <table class="inputs-table">
+        <tr>
+            <td><label for="title">Title:</label></td>
+            <td>
+                <input asp-for="Title" type="text" 
+                       size="31" 
+                       placeholder="Max: 50 symbols" />
+                <span asp-validation-for="Title"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="description">Description: </label></td>
+            <td>
+                <textarea asp-for="Description" 
+                          size="31" 
+                          cols="30" 
+                          rows="10" 
+                          placeholder="Max: 250 symbols" 
+                          style="resize: none;"></textarea>
+                <span asp-validation-for="Description"></span>
+            </td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Confirm" />
+
+</div>
+}

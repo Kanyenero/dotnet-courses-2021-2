@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PersonViewModel>
+﻿@model IEnumerable<Entities.Person>
 
 @{
     ViewData["Title"] = "Persons";
@@ -9,11 +9,10 @@
         <ul class="navbar-table_actions-nav">
             <li class="nav-item">
                 <a class="nav-link" 
-                   asp-area="" 
-                   asp-controller="Home" 
-                   asp-action="PersonForm"
-                   asp-route-task="add"
-                   asp-route-id="">Add New Person</a>
+                   asp-controller="Persons" 
+                   asp-action="AddPersonForm">
+                   Add New Person
+                </a>
             </li>
         </ul>
 
@@ -36,14 +35,13 @@
             <tr id="@person.ID">
                 <td class="table_header-operation">
                     <a class="table-link" 
-                       asp-controller="Home" 
-                       asp-action="PersonForm"
-                       asp-route-task="edit"
+                       asp-controller="Persons" 
+                       asp-action="EditPersonForm"
                        asp-route-id="@person.ID">
                        Edit
                     </a> |
                     <a class="table-link" 
-                       asp-controller="Home" 
+                       asp-controller="Common" 
                        asp-action="RemoveConfirmationForm"
                        asp-route-type="person"
                        asp-route-id="@person.ID">
@@ -56,7 +54,7 @@
                 <td class="table_header-birthdate">@person.Birthdate</td>
                 <td class="table_header-age">@person.Age</td>
                 <td class="table_header-awards">
-                    @person.GetAwards()
+                    @string.Join(", ", person.GetAwards());
                 </td>
             </tr>
         }

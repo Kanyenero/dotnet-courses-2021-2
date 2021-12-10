@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PersonsAndAwardsMVC
 {
@@ -47,7 +46,7 @@ namespace PersonsAndAwardsMVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Persons}/{id?}");
+                    pattern: "{controller=Persons}/{action=Persons}/{id?}");
             });
         }
     }

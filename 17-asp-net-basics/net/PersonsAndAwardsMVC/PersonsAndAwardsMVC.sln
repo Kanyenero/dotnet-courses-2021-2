@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Awards.BL", "Awards.BL\Awar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persons.BL", "Persons.BL\Persons.BL.csproj", "{946A29D9-34FB-4A91-931B-57A699E35A33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handlers", "Handlers\Handlers.csproj", "{23CD2570-63EC-4874-A984-933BEB20D7EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{946A29D9-34FB-4A91-931B-57A699E35A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{946A29D9-34FB-4A91-931B-57A699E35A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{946A29D9-34FB-4A91-931B-57A699E35A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23CD2570-63EC-4874-A984-933BEB20D7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23CD2570-63EC-4874-A984-933BEB20D7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23CD2570-63EC-4874-A984-933BEB20D7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23CD2570-63EC-4874-A984-933BEB20D7EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{B4E6A8A1-CA75-41D5-A302-A20544ED7FE2} = {CA730367-308D-4F3E-B3D8-A72B2025F8B1}
 		{19C258E8-0292-44D8-82C1-B0489587C8A9} = {958D72CF-D912-41A1-8046-5233C4642BA9}
 		{946A29D9-34FB-4A91-931B-57A699E35A33} = {958D72CF-D912-41A1-8046-5233C4642BA9}
+		{23CD2570-63EC-4874-A984-933BEB20D7EB} = {1314E821-C6ED-4104-95B5-DA14AB437046}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7EA3E386-6810-4658-A340-BCFD22FBA214}

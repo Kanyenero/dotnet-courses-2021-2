@@ -1,0 +1,116 @@
+﻿@model PersonsAndAwardsMVC.Models.PersonAndAwardsViewModel
+
+@{
+    ViewData["Title"] = "Add/Edit Person";
+}
+
+@using (Html.BeginForm("EditPersonForm", "Persons", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+<div class="container">
+
+    <h2>Edit Selected Person</h2>
+
+    <input asp-for="person.ID" type="hidden" />
+
+    <table class="inputs-table">
+        <tr>
+            <td><label for="Name">Name:</label></td>
+            <td>
+                <input asp-for="person.Name" type="text"
+                       size="43"
+                       placeholder="Max: 50 symbols" />
+                <span asp-validation-for="person.Name"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="LastName">LastName:</label></td>
+            <td>
+                <input asp-for="person.LastName" type="text"
+                       size="43"
+                       placeholder="Max: 50 symbols" />
+                <span asp-validation-for="person.LastName"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="Birthdate">Birthdate:</label></td>
+            <td>
+                <input asp-for="person.Birthdate" type="date" style="width: 320px;" />
+                <span asp-validation-for="person.Birthdate"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="allAvailableAwards">Awards:</label></td>
+            <td>
+                <table class="inputs-table_inner">
+                    <tr>
+                        <td rowspan="2">
+                            <select name="allAvailableAwards"
+                                    id="allAvailableAwards"
+                                    size="5"
+                                    multiple>
+                                    @foreach (var award in Model.allAvailableAwards)
+                                    {
+                                        if (!Model.person.Awards.Contains(award)) { <option value="@award.ID">@award.Title</option> }
+                                    }
+                            </select>
+                        </td>
+
+                        <td><input type="button" name="removeAward" id="removeAward" value="<"></td>
+
+                        <td rowspan="2">
+                            <select name="choosedAwards"
+                                    id="choosedAwards"
+                                    size="5"
+                                    multiple>
+                                    @foreach (var award in Model.person.Awards)
+                                    {
+                                        <option value="@award.ID" selected>@award.Title</option>
+                                    }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" name="addAward" id="addAward" value=">" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <input type="submit" name="submit" id="submit" value="Confirm" />
+
+</div>
+}
+
+<script>
+    $(document).ready(function ()
+    {
+        $('#submit').click(function ()
+        {
+            $('#choosedAwards option').prop('selected', true);
+        });
+
+        $('#addAward').click(function ()
+        {
+            var itemID = parseInt($('#allAvailableAwards option:selected').val());
+            $('#allAvailableAwards option:selected').remove().appendTo('#choosedAwards');
+
+            console.log("Added award with ID: " + itemID);
+        });
+
+        $('#removeAward').click(function ()
+        {
+            var itemID = parseInt($('#choosedAwards option:selected').val());
+            $('#choosedAwards option:selected').remove().appendTo('#allAvailableAwards');
+
+            console.log("Removed award with ID: " + itemID);
+        });
+    });
+</script>

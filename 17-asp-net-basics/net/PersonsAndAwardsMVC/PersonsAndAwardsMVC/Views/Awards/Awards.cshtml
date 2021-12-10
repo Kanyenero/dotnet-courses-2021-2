@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AwardViewModel>
+﻿@model IEnumerable<Entities.Award>
 
 @{
     ViewData["Title"] = "Awards";
@@ -9,11 +9,10 @@
         <ul class="navbar-table_actions-nav">
             <li class="nav-item">
                 <a class="nav-link" 
-                   asp-area="" 
-                   asp-controller="Home" 
-                   asp-action="AwardForm"
-                   asp-route-task="add"
-                   asp-route-id="">Add New Award</a>
+                   asp-controller="Awards" 
+                   asp-action="AddAwardForm">
+                   Add New Award
+                </a>
             </li>
         </ul>
 
@@ -33,14 +32,13 @@
             <tr>
                 <td class="table_header-operation">
                     <a class="table-link"
-                       asp-controller="Home"
-                       asp-action="AwardForm"
-                       asp-route-task="edit"
+                       asp-controller="Awards"
+                       asp-action="EditAwardForm"
                        asp-route-id="@award.ID">
                        Edit
                     </a> |
                     <a class="table-link"
-                       asp-controller="Home"
+                       asp-controller="Common"
                        asp-action="RemoveConfirmationForm"
                        asp-route-type="award"
                        asp-route-id="@award.ID">
